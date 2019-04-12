@@ -104136,16 +104136,22 @@ var data = {
     message: 'NEM',
     tx: 'bfcdc535283c21dd9b480d1a9a66ee2adc691edef271daa50569c7c9feea72a8',
     amount: 1,
-    signature: "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+    signature: "11bbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
   }, {
     message: 'FUDFUDFUD',
-    tx: '7ba3a7328c7ea9616fe1758c5f4f7d1a333d26fb2bc1d42e0862762a42b38430'
+    tx: '7ba3a7328c7ea9616fe1758c5f4f7d1a333d26fb2bc1d42e0862762a42b38430',
+    amount: 0,
+    signature: "22bbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
   }, {
     message: 'PUMP!!!!',
-    tx: 'c3cec3c3c1fffea00e4bd06dcdb1c3e5b93b73465eb6276a5cd0f89511611557'
+    tx: 'c3cec3c3c1fffea00e4bd06dcdb1c3e5b93b73465eb6276a5cd0f89511611557',
+    amount: 3.9,
+    signature: "33bbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
   }, {
     message: 'SnemS!!',
-    tx: '0000ff000'
+    tx: '0000ff000',
+    amount: 20,
+    signature: "44bdddd123123123bbbbbbbbbbbbbbbbbb"
   }]
 };
 var app = new Vue({
@@ -104171,8 +104177,14 @@ var app = new Vue({
         fontSize: "".concat(size, "px")
       };
     },
-    graffitiStyle: function graffitiStyle() {
-      return "red";
+    graffitiStyle: function graffitiStyle(list) {
+      // フォントファミリー
+      var signature = list.signature;
+      var num1 = parseInt(signature.substr(0, 1), 16);
+      var num2 = parseInt(signature.substr(1, 1), 16);
+      var fontFamily = "font".concat(num1);
+      var fontStyle = "style".concat(num2);
+      return [fontFamily, fontStyle];
     }
   }
 });

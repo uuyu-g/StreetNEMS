@@ -39,7 +39,7 @@ img.wall {
   /* mix-blend-mode: overlay; */
 }
 
-.naka {
+.style5 {
   position: absolute;
   top: 3vw;
   left: 3vw;
@@ -52,6 +52,7 @@ img.wall {
   /* color: aliceblue */
 }
 
+/* フォントは16種類? */
 .font1 {
   font-family: "Gloria Hallelujah", cursive;
 }
@@ -64,7 +65,20 @@ img.wall {
   font-family: "Gochi Hand", cursive;
 }
 
-.font4 {
+.font4, 
+.font5, 
+.font6, 
+.font7, 
+.font8, 
+.font9, 
+.font10, 
+.font11, 
+.font12, 
+.font13, 
+.font14, 
+.font15, 
+.font16
+{
   font-family: "Caveat Brush", cursive;
 }
 
@@ -72,20 +86,20 @@ img.wall {
   position: absolute;
 }
 
-.red {
+.style1 {
   filter: blur(1.5px);
   font-size: 4vw;
   line-height: 4vw;
-  color: lighten(red, 1%);
+  color: red;
 }
 
-.black {
+.style2 {
   filter: blur(1.5px);
   font-size: 3vw;
   color: black;
 }
 
-.vintage {
+.style3 {
   filter: contrast(500%) blur(1.5px);
   font-size: 5vw;
   color: lighten(tomato, 1%);
@@ -94,7 +108,7 @@ img.wall {
   transform: rotate(-7.5deg);
 }
 
-.nem {
+.style4 {
   filter: blur(1.5px);
   font-size: 5vw;
   color: #00d1ff;
