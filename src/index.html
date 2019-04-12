@@ -13,7 +13,7 @@
 	<div id="app">
 		<img class="wall" src="bg.jpg" alt="">
 		<span v-for="item in list" 
-			:class="graffitiStyle()"
+			:class="graffitiStyle(item)"
 			:style="style(item)">
 			{{ item.message }}
 		</span>
