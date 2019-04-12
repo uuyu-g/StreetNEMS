@@ -12,13 +12,14 @@
 <body>
 	<div id="app">
 		<img class="wall" src="bg.jpg" alt="">
-		<span v-for="item in list" class="red font1" style="font-size: 50px;"
+		<span v-for="item in list" style="font-size: 50px;"
 			:style="position(item)">{{ item.message }}
 		</span>
 		<graffiti></graffiti>
 	</div>
 
 	<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+	<script src="nem-sdk.js"></script>
 	<script src="main.js"></script>
 </body>
 
