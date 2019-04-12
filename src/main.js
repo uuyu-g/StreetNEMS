@@ -1,7 +1,3 @@
-const nem = require("nem-sdk").default;
-
-
-
 const degSetting = {
 	in_start: 0,
 	in_end: 255,
