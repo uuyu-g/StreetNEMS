@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "nem-sdk": "^1.6.7",
     "parcel": "^1.12.3"
   }
 }
