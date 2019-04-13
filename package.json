@@ -11,5 +11,8 @@
   "dependencies": {
     "nem-sdk": "^1.6.7",
     "parcel": "^1.12.3"
+  },
+  "devDependencies": {
+    "sass": "^1.18.0"
   }
 }
