@@ -73,15 +73,16 @@ const recent_transactions_handler = res => {
   res.data.map(d => {
     if (d.transaction.message.payload) {
       posts.push({
-        message: nem.utils.format.hexToUtf8(res.transaction.message.payload),
-        tx: res.meta.hash.data,
-        amount: res.transaction.amount,
-        signature: res.transaction.signature
+				message: nem.utils.format.hexToUtf8(d.transaction.message.payload),
+        tx: d.meta.hash.data,
+        amount: d.transaction.amount,
+        signature: d.transaction.signature
       });
     }
   });
 	// riot.update("message", { posts: posts });
-	data.list.push(posts);
+	console.log(posts);
+	data.list.push(...posts);
 };
 
 const confirmed_transaction_handler = res => {
@@ -95,33 +96,33 @@ const confirmed_transaction_handler = res => {
     });
   }
 	// riot.update("message", { posts: posts });
-	data.list.unshift(posts);
+	data.list.unshift(...posts);
 };
-
-connector.connect().then(
-  () => {
-    console.log("Connected");
-
-    nem.com.websockets.subscribe.account.transactions.recent(
-      connector,
-      recent_transactions_handler
-    );
-    nem.com.websockets.subscribe.account.transactions.confirmed(
-      connector,
-      confirmed_transaction_handler
-    );
-
-    nem.com.websockets.requests.account.transactions.recent(connector);
-  },
-  err => {
-    console.error(err);
-  }
-);
-
 
 const app = new Vue({
 	el: '#app',
 	data: data,
+	created() {
+		connector.connect().then(
+			() => {
+				console.log("Connected");
+		
+				nem.com.websockets.subscribe.account.transactions.recent(
+					connector,
+					recent_transactions_handler
+				);
+				nem.com.websockets.subscribe.account.transactions.confirmed(
+					connector,
+					confirmed_transaction_handler
+				);
+		
+				nem.com.websockets.requests.account.transactions.recent(connector);
+			},
+			err => {
+				console.error(err);
+			}
+		);
+	},
 	methods: {
 		style(val) {
 			//位置と角度をハッシュから
