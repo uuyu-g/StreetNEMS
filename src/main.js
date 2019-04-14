@@ -1,8 +1,8 @@
 const degSetting = {
 	in_start: 0,
 	in_end: 255,
-	out_start: -45,
-	out_end: 45
+	out_start: -20,
+	out_end: 20
 };
 
 const widthSetting = {
@@ -21,7 +21,7 @@ let data = {
 	list: [{
 			message: 'NEM',
 			tx: 'bfcdc535283c21dd9b480d1a9a66ee2adc691edef271daa50569c7c9feea72a8',
-			amount: 1,
+			amount: 1000000,
 			signature:"11bbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
 		},
 		{
@@ -33,13 +33,13 @@ let data = {
 		{
 			message: 'PUMP!!!!',
 			tx: 'c3cec3c3c1fffea00e4bd06dcdb1c3e5b93b73465eb6276a5cd0f89511611557',
-			amount: 3.9,
+			amount: 3900000,
 			signature:"33bbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
 		},
 		{
 			message: 'SnemS!!',
 			tx: '0000ff000',
-			amount: 20,
+			amount: 2000000,
 			signature:"44bdddd123123123bbbbbbbbbbbbbbbbbb"
 		}
 	]
@@ -81,7 +81,6 @@ const recent_transactions_handler = res => {
     }
   });
 	// riot.update("message", { posts: posts });
-	console.log(posts);
 	data.list.push(...posts);
 };
 
@@ -98,6 +97,8 @@ const confirmed_transaction_handler = res => {
 	// riot.update("message", { posts: posts });
 	data.list.unshift(...posts);
 };
+
+console.log("data:",data)
 
 const app = new Vue({
 	el: '#app',
@@ -135,7 +136,8 @@ const app = new Vue({
 			const deg = hexToLimitedRange(r, degSetting);
 
 			//サイズをammountから
-			const size = 20 + val.amount * 20 || 36;
+			const size = 20 + val.amount * 20 / 1000000 || 36;
+			console.log("fontsize is ",size)
 
 			return {
 				top: top + 'px',

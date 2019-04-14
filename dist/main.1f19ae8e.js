@@ -104595,8 +104595,8 @@ exports.default = {
 var degSetting = {
   in_start: 0,
   in_end: 255,
-  out_start: -45,
-  out_end: 45
+  out_start: -20,
+  out_end: 20
 };
 var widthSetting = {
   in_start: 0,
@@ -104614,7 +104614,7 @@ var data = {
   list: [{
     message: 'NEM',
     tx: 'bfcdc535283c21dd9b480d1a9a66ee2adc691edef271daa50569c7c9feea72a8',
-    amount: 1,
+    amount: 1000000,
     signature: "11bbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
   }, {
     message: 'FUDFUDFUD',
@@ -104624,12 +104624,12 @@ var data = {
   }, {
     message: 'PUMP!!!!',
     tx: 'c3cec3c3c1fffea00e4bd06dcdb1c3e5b93b73465eb6276a5cd0f89511611557',
-    amount: 3.9,
+    amount: 3900000,
     signature: "33bbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
   }, {
     message: 'SnemS!!',
     tx: '0000ff000',
-    amount: 20,
+    amount: 2000000,
     signature: "44bdddd123123123bbbbbbbbbbbbbbbbbb"
   }]
 }; //NEMメッセージの取り込み
@@ -104667,8 +104667,6 @@ var recent_transactions_handler = function recent_transactions_handler(res) {
     }
   }); // riot.update("message", { posts: posts });
 
-  console.log(posts);
-
   (_data$list = data.list).push.apply(_data$list, posts);
 };
 
@@ -104690,6 +104688,7 @@ var confirmed_transaction_handler = function confirmed_transaction_handler(res) 
   (_data$list2 = data.list).unshift.apply(_data$list2, posts);
 };
 
+console.log("data:", data);
 var app = new Vue({
   el: '#app',
   data: data,
@@ -104715,7 +104714,8 @@ var app = new Vue({
       var left = hexToLimitedRange(y, widthSetting);
       var deg = hexToLimitedRange(r, degSetting); //サイズをammountから
 
-      var size = 20 + val.amount * 20 || 36;
+      var size = 20 + val.amount * 20 / 1000000 || 36;
+      console.log("fontsize is ", size);
       return {
         top: top + 'px',
         left: left + 'px',
