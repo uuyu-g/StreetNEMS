@@ -1,8 +1,8 @@
 const degSetting = {
 	in_start: 0,
 	in_end: 255,
-	out_start: -45,
-	out_end: 45
+	out_start: -20,
+	out_end: 20
 };
 
 const widthSetting = {
@@ -17,11 +17,11 @@ const hexToLimitedRange = (input, obj) => {
 	return obj.out_start + slope * (input - obj.in_start);
 };
 
-const data = {
+let data = {
 	list: [{
 			message: 'NEM',
 			tx: 'bfcdc535283c21dd9b480d1a9a66ee2adc691edef271daa50569c7c9feea72a8',
-			amount: 1,
+			amount: 1000000,
 			signature:"11bbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
 		},
 		{
@@ -33,21 +33,97 @@ const data = {
 		{
 			message: 'PUMP!!!!',
 			tx: 'c3cec3c3c1fffea00e4bd06dcdb1c3e5b93b73465eb6276a5cd0f89511611557',
-			amount: 3.9,
+			amount: 3900000,
 			signature:"33bbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
 		},
 		{
 			message: 'SnemS!!',
 			tx: '0000ff000',
-			amount: 20,
+			amount: 2000000,
 			signature:"44bdddd123123123bbbbbbbbbbbbbbbbbb"
 		}
 	]
 };
+//NEMメッセージの取り込み
+const nem = require("nem-sdk").default;
+
+let posts = []; //取得した投稿内容を riot の tag に渡すための配列
+
+//接続する supernode をばらけさせる
+const getEndpoint = () => {
+  const mainnet = nem.model.nodes.mainnet;
+
+  // 62.75.171.41 と localhost を除いた node を取得する
+  const target_node =
+    mainnet[Math.floor(Math.random() * (mainnet.length - 2)) + 1];
+  console.log(target_node);
+
+  return target_node.uri;
+};
+
+const address = "NCHV46TIRIV3H7V3SONZLIN2VGWMK3RMOUOVRXHO"; //SNEMSのアドレス
+const endpoint = nem.model.objects.create("endpoint")(
+  getEndpoint(),
+  nem.model.nodes.websocketPort
+);
+const connector = nem.com.websockets.connector.create(endpoint, address);
+
+const recent_transactions_handler = res => {
+  console.log("recent_transactions_handler", res);
+  res.data.map(d => {
+    if (d.transaction.message.payload) {
+      posts.push({
+				message: nem.utils.format.hexToUtf8(d.transaction.message.payload),
+        tx: d.meta.hash.data,
+        amount: d.transaction.amount,
+        signature: d.transaction.signature
+      });
+    }
+  });
+	// riot.update("message", { posts: posts });
+	data.list.push(...posts);
+};
+
+const confirmed_transaction_handler = res => {
+  console.log("confirmed_transaction_handler", res);
+  if (res.transaction.message.payload) {
+    posts.unshift({
+      message: nem.utils.format.hexToUtf8(res.transaction.message.payload),
+      tx: res.meta.hash.data,
+      amount: res.transaction.amount,
+      signature: res.transaction.signature
+    });
+  }
+	// riot.update("message", { posts: posts });
+	data.list.unshift(...posts);
+};
+
+console.log("data:",data)
 
 const app = new Vue({
 	el: '#app',
 	data: data,
+	created() {
+		connector.connect().then(
+			() => {
+				console.log("Connected");
+		
+				nem.com.websockets.subscribe.account.transactions.recent(
+					connector,
+					recent_transactions_handler
+				);
+				nem.com.websockets.subscribe.account.transactions.confirmed(
+					connector,
+					confirmed_transaction_handler
+				);
+		
+				nem.com.websockets.requests.account.transactions.recent(connector);
+			},
+			err => {
+				console.error(err);
+			}
+		);
+	},
 	methods: {
 		style(val) {
 			//位置と角度をハッシュから
@@ -60,12 +136,13 @@ const app = new Vue({
 			const deg = hexToLimitedRange(r, degSetting);
 
 			//サイズをammountから
-			const size = 20 + val.amount * 20 || 36;
+			const size = 20 + val.amount * 20 / 1000000 || 36;
+			console.log("fontsize is ",size)
 
 			return {
 				top: top + 'px',
 				left: left + 'px',
-				transform: 'rotate(' + deg + 'deg)',
+				transform: `rotate(${deg}deg)`,
 				fontSize: `${size}px`
 			};
 		},
