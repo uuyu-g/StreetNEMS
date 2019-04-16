@@ -104612,23 +104612,23 @@ var hexToLimitedRange = function hexToLimitedRange(input, obj) {
 
 var data = {
   list: [{
-    message: 'NEM',
-    tx: 'bfcdc535283c21dd9b480d1a9a66ee2adc691edef271daa50569c7c9feea72a8',
+    message: "NEM",
+    tx: "bfcdc535283c21dd9b480d1a9a66ee2adc691edef271daa50569c7c9feea72a8",
     amount: 1000000,
     signature: "11bbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
   }, {
-    message: 'FUDFUDFUD',
-    tx: '7ba3a7328c7ea9616fe1758c5f4f7d1a333d26fb2bc1d42e0862762a42b38430',
+    message: "FUDFUDFUD",
+    tx: "7ba3a7328c7ea9616fe1758c5f4f7d1a333d26fb2bc1d42e0862762a42b38430",
     amount: 0,
     signature: "22bbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
   }, {
-    message: 'PUMP!!!!',
-    tx: 'c3cec3c3c1fffea00e4bd06dcdb1c3e5b93b73465eb6276a5cd0f89511611557',
+    message: "PUMP!!!!",
+    tx: "c3cec3c3c1fffea00e4bd06dcdb1c3e5b93b73465eb6276a5cd0f89511611557",
     amount: 3900000,
     signature: "33bbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
   }, {
-    message: 'SnemS!!',
-    tx: '0000ff000',
+    message: "SnemS!!",
+    tx: "0000ff000",
     amount: 2000000,
     signature: "44bdddd123123123bbbbbbbbbbbbbbbbbb"
   }]
@@ -104640,11 +104640,11 @@ var posts = []; //取得した投稿内容を riot の tag に渡すための配
 //接続する supernode をばらけさせる
 
 var getEndpoint = function getEndpoint() {
-  var mainnet = nem.model.nodes.mainnet; // 62.75.171.41 と localhost を除いた node を取得する
-
-  var target_node = mainnet[Math.floor(Math.random() * (mainnet.length - 2)) + 1];
+  var sn = "https://nemstrunk.supernode.me,https://nemstrunk2.supernode.me,https://kohkei.supernode.me,https://mttsukuba.supernode.me,https://pegatennnag.supernode.me,https://qora01.supernode.me,https://shibuya.supernode.me,https://strategic-trader-1.supernode.me,https://strategic-trader-2.supernode.me,https://thomas1.supernode.me,https://beny.supernode.me,https://aqualife1.supernode.me,https://aqualife2.supernode.me,https://aqualife3.supernode.me,https://mnbhsgwbeta.supernode.me,https://mnbhsgwgamma.supernode.me";
+  var sn_array = sn.split(",");
+  var target_node = sn_array[Math.floor(Math.random() * sn_array.length)];
   console.log(target_node);
-  return target_node.uri;
+  return target_node;
 };
 
 var address = "NCHV46TIRIV3H7V3SONZLIN2VGWMK3RMOUOVRXHO"; //SNEMSのアドレス
@@ -104690,7 +104690,7 @@ var confirmed_transaction_handler = function confirmed_transaction_handler(res) 
 
 console.log("data:", data);
 var app = new Vue({
-  el: '#app',
+  el: "#app",
   data: data,
   created: function created() {
     connector.connect().then(function () {
@@ -104717,8 +104717,8 @@ var app = new Vue({
       var size = 20 + val.amount * 20 / 1000000 || 36;
       console.log("fontsize is ", size);
       return {
-        top: top + 'px',
-        left: left + 'px',
+        top: top + "px",
+        left: left + "px",
         transform: "rotate(".concat(deg, "deg)"),
         fontSize: "".concat(size, "px")
       };
