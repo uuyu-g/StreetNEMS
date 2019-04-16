@@ -80,7 +80,6 @@ const recent_transactions_handler = res => {
       });
     }
   });
-	// riot.update("message", { posts: posts });
 	data.list.push(...posts);
 };
 
