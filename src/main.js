@@ -52,7 +52,7 @@ let posts = []; //取得した投稿内容を riot の tag に渡すための配
 //接続する supernode をばらけさせる
 const getEndpoint = () => {
   var sn =
-  "150.95.213.212,nemlovely6.supernode.me";
+  "https://150.95.213.212,http://nemlovely6.supernode.me";
 	var snArray = sn.split(",");
 
   const target_node =
