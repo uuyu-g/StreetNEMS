@@ -51,14 +51,15 @@ let posts = []; //取得した投稿内容を riot の tag に渡すための配
 
 //接続する supernode をばらけさせる
 const getEndpoint = () => {
-  const mainnet = nem.model.nodes.mainnet;
+  var sn =
+  "https://nemstrunk.supernode.me,https://nemstrunk2.supernode.me,https://kohkei.supernode.me,https://mttsukuba.supernode.me,https://pegatennnag.supernode.me,https://qora01.supernode.me,https://shibuya.supernode.me,https://strategic-trader-1.supernode.me,https://strategic-trader-2.supernode.me,https://thomas1.supernode.me,https://beny.supernode.me,https://aqualife1.supernode.me,https://aqualife2.supernode.me,https://aqualife3.supernode.me,https://mnbhsgwbeta.supernode.me,https://mnbhsgwgamma.supernode.me";
+	var snArray = sn.split(",");
 
-  // 62.75.171.41 と localhost を除いた node を取得する
   const target_node =
-    mainnet[Math.floor(Math.random() * (mainnet.length - 2)) + 1];
+    snArray[Math.floor(Math.random() * (snArray.length)) + 1];
   console.log(target_node);
 
-  return target_node.uri;
+  return target_node;
 };
 
 const address = "NCHV46TIRIV3H7V3SONZLIN2VGWMK3RMOUOVRXHO"; //SNEMSのアドレス
