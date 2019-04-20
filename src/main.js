@@ -50,16 +50,14 @@ const nem = require("nem-sdk").default;
 let posts = []; //取得した投稿内容を riot の tag に渡すための配列
 
 //接続する supernode をばらけさせる
-const getEndpoint = () => {
-  var sn =
-  "https://mnbhsgwgamma.supernode.me";
-	var snArray = sn.split(",");
+let getEndpoint = () => {
+  let mainnet = nem.model.nodes.mainnet;
 
-  const target_node =
-    snArray[Math.floor(Math.random() * (snArray.length)) + 1];
+  // 62.75.171.41 と localhost を除いた node を取得する
+  let target_node = mainnet[Math.floor(Math.random()* (mainnet.length - 2)) + 1];
   console.log(target_node);
 
-  return target_node;
+  return target_node.uri;
 };
 
 const address = "NCHV46TIRIV3H7V3SONZLIN2VGWMK3RMOUOVRXHO"; //SNEMSのアドレス
