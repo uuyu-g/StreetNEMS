@@ -52,7 +52,7 @@ let posts = []; //取得した投稿内容を riot の tag に渡すための配
 //接続する supernode をばらけさせる
 const getEndpoint = () => {
   var sn =
-  "https://nemstrunk.supernode.me,https://nemstrunk2.supernode.me,https://kohkei.supernode.me,https://mttsukuba.supernode.me,https://pegatennnag.supernode.me,https://qora01.supernode.me,https://shibuya.supernode.me,https://strategic-trader-1.supernode.me,https://strategic-trader-2.supernode.me,https://thomas1.supernode.me,https://beny.supernode.me,https://aqualife1.supernode.me,https://aqualife2.supernode.me,https://aqualife3.supernode.me,https://mnbhsgwbeta.supernode.me,https://mnbhsgwgamma.supernode.me";
+  "https://mnbhsgwgamma.supernode.me";
 	var snArray = sn.split(",");
 
   const target_node =
