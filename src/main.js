@@ -1,15 +1,15 @@
 const degSetting = {
 	in_start: 0,
 	in_end: 255,
-	out_start: -20,
-	out_end: 20
+	out_start: -10,
+	out_end: 10
 };
 
 const widthSetting = {
 	in_start: 0,
 	in_end: 255,
 	out_start: 0,
-	out_end: 800
+	out_end: 1150
 };
 
 const hexToLimitedRange = (input, obj) => {
@@ -19,25 +19,97 @@ const hexToLimitedRange = (input, obj) => {
 
 let data = {
 	list: [{
-			message: 'NEM',
+			message: 'NEM1',
 			tx: 'bfcdc535283c21dd9b480d1a9a66ee2adc691edef271daa50569c7c9feea72a8',
 			amount: 1000000,
 			signature:"11bbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
 		},
 		{
-			message: 'FUDFUDFUD',
+			message: 'FUDFUDFUD2',
 			tx: '7ba3a7328c7ea9616fe1758c5f4f7d1a333d26fb2bc1d42e0862762a42b38430',
 			amount: 0,
 			signature:"22bbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
 		},
 		{
-			message: 'PUMP!!!!',
+			message: 'PUMP!!!!3',
 			tx: 'c3cec3c3c1fffea00e4bd06dcdb1c3e5b93b73465eb6276a5cd0f89511611557',
 			amount: 3900000,
 			signature:"33bbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
 		},
 		{
-			message: 'SnemS!!',
+			message: 'SnemS!!4',
+			tx: '0000ff000',
+			amount: 2000000,
+			signature:"44bdddd123123123bbbbbbbbbbbbbbbbbb"
+		},
+		{
+			message: 'SnemS!!5',
+			tx: '0000ff000',
+			amount: 2000000,
+			signature:"44bdddd123123123bbbbbbbbbbbbbbbbbb"
+		},
+		{
+			message: 'SnemS!!6',
+			tx: '0000ff000',
+			amount: 2000000,
+			signature:"44bdddd123123123bbbbbbbbbbbbbbbbbb"
+		},
+		{
+			message: 'SnemS!!7',
+			tx: '0000ff000',
+			amount: 2000000,
+			signature:"44bdddd123123123bbbbbbbbbbbbbbbbbb"
+		},
+		{
+			message: 'SnemS!!8',
+			tx: '0000ff000',
+			amount: 2000000,
+			signature:"44bdddd123123123bbbbbbbbbbbbbbbbbb"
+		},
+		{
+			message: 'SnemS!!9',
+			tx: '0000ff000',
+			amount: 2000000,
+			signature:"44bdddd123123123bbbbbbbbbbbbbbbbbb"
+		},
+		{
+			message: 'SnemS!!10',
+			tx: '0000ff000',
+			amount: 2000000,
+			signature:"44bdddd123123123bbbbbbbbbbbbbbbbbb"
+		},
+		{
+			message: 'SnemS!!11',
+			tx: '0000ff000',
+			amount: 2000000,
+			signature:"44bdddd123123123bbbbbbbbbbbbbbbbbb"
+		},
+		{
+			message: 'SnemS!!12',
+			tx: '0000ff000',
+			amount: 2000000,
+			signature:"44bdddd123123123bbbbbbbbbbbbbbbbbb"
+		},
+		{
+			message: 'SnemS!!13',
+			tx: '0000ff000',
+			amount: 2000000,
+			signature:"44bdddd123123123bbbbbbbbbbbbbbbbbb"
+		},
+		{
+			message: 'SnemS!!14',
+			tx: '0000ff000',
+			amount: 2000000,
+			signature:"44bdddd123123123bbbbbbbbbbbbbbbbbb"
+		},
+		{
+			message: 'SnemS!!15',
+			tx: '0000ff000',
+			amount: 2000000,
+			signature:"44bdddd123123123bbbbbbbbbbbbbbbbbb"
+		},
+		{
+			message: 'SnemS!!16',
 			tx: '0000ff000',
 			amount: 2000000,
 			signature:"44bdddd123123123bbbbbbbbbbbbbbbbbb"
@@ -92,7 +164,6 @@ const confirmed_transaction_handler = res => {
       signature: res.transaction.signature
     });
   }
-	// riot.update("message", { posts: posts });
 	data.list.unshift(...posts);
 };
 
@@ -106,16 +177,16 @@ const app = new Vue({
 			() => {
 				console.log("Connected");
 		
-				nem.com.websockets.subscribe.account.transactions.recent(
-					connector,
-					recent_transactions_handler
-				);
-				nem.com.websockets.subscribe.account.transactions.confirmed(
-					connector,
-					confirmed_transaction_handler
-				);
+				// NEMを読み込まない NEMnem.com.websockets.subscribe.account.transactions.recent(
+				// 	connector,
+				// 	recent_transactions_handler
+				// );
+				// nem.com.websockets.subscribe.account.transactions.confirmed(
+				// 	connector,
+				// 	confirmed_transaction_handler
+				// );
 		
-				nem.com.websockets.requests.account.transactions.recent(connector);
+				// nem.com.websockets.requests.account.transactions.recent(connector);
 			},
 			err => {
 				console.error(err);
