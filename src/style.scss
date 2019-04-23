@@ -39,18 +39,7 @@ img.wall {
   /* mix-blend-mode: overlay; */
 }
 
-.style5 {
-  position: absolute;
-  top: 3vw;
-  left: 3vw;
-  font-family: "Sedgwick Ave Display", cursive;
-  font-size: 7vw;
-  color: rgba(255, 255, 255, 0.438);
-  text-shadow: 
-    0px 0px 3px rgba(248, 242, 242, 0.863),
-    5px 5px 40px rgba(207, 16, 16, 0.562);
-  /* color: aliceblue */
-}
+
 
 /* フォントは16種類? */
 .font1 {
@@ -130,7 +119,18 @@ img.wall {
 color: #D5E2D6; 
 text-shadow: #4A744D 1px 1px,#4A744D 0px 0px,#4A744D 1px 1px,#4A744D 2px 2px,#4A744D 3px 3px,#4A744D 4px 4px,#4A744D 5px 5px,#4A744D 6px 6px,#4A744D 7px 7px,#4A744D 8px 8px,#4A744D 9px 9px,#4A744D 10px 10px,#4A744D 11px 11px,#4A744D 12px 12px,#4A744D 13px 13px,#4A744D 14px 14px,#4A744D 15px 15px,#4A744D 16px 16px,#4A744D 17px 17px,#4A744D 18px 18px,#4A744D 19px 19px,#4A744D 20px 20px,#4A744D 21px 21px,#4A744D 22px 22px,#4A744D 23px 23px,#4A744D 24px 24px,#4A744D 25px 25px,#4A744D 26px 26px,#4A744D 27px 27px,#4A744D 28px 28px,#4A744D 29px 29px;
 }
-.style5,
+.style5 {
+  position: absolute;
+  top: 3vw;
+  left: 3vw;
+  font-family: "Sedgwick Ave Display", cursive;
+  font-size: 7vw;
+  color: rgba(255, 255, 255, 0.438);
+  text-shadow: 
+    0px 0px 3px rgba(248, 242, 242, 0.863),
+    5px 5px 40px rgba(207, 16, 16, 0.562);
+  /* color: aliceblue */
+}
 .style6,
 .style7,
 .style8,
