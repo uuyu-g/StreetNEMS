@@ -1,15 +1,15 @@
 const degSetting = {
 	in_start: 0,
 	in_end: 255,
-	out_start: -20,
-	out_end: 20
+	out_start: -10,
+	out_end: 10
 };
 
 const widthSetting = {
 	in_start: 0,
 	in_end: 255,
 	out_start: 0,
-	out_end: 800
+	out_end: 1150
 };
 
 const hexToLimitedRange = (input, obj) => {
@@ -19,25 +19,97 @@ const hexToLimitedRange = (input, obj) => {
 
 let data = {
 	list: [{
-			message: 'NEM',
+			message: 'NEM1',
 			tx: 'bfcdc535283c21dd9b480d1a9a66ee2adc691edef271daa50569c7c9feea72a8',
 			amount: 1000000,
 			signature:"11bbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
 		},
 		{
-			message: 'FUDFUDFUD',
+			message: 'FUDFUDFUD2',
 			tx: '7ba3a7328c7ea9616fe1758c5f4f7d1a333d26fb2bc1d42e0862762a42b38430',
 			amount: 0,
 			signature:"22bbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
 		},
 		{
-			message: 'PUMP!!!!',
+			message: 'PUMP!!!!3',
 			tx: 'c3cec3c3c1fffea00e4bd06dcdb1c3e5b93b73465eb6276a5cd0f89511611557',
 			amount: 3900000,
 			signature:"33bbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
 		},
 		{
-			message: 'SnemS!!',
+			message: 'SnemS!!4',
+			tx: '0000ff000',
+			amount: 2000000,
+			signature:"44bdddd123123123bbbbbbbbbbbbbbbbbb"
+		},
+		{
+			message: 'SnemS!!5',
+			tx: '0000ff000',
+			amount: 2000000,
+			signature:"44bdddd123123123bbbbbbbbbbbbbbbbbb"
+		},
+		{
+			message: 'SnemS!!6',
+			tx: '0000ff000',
+			amount: 2000000,
+			signature:"44bdddd123123123bbbbbbbbbbbbbbbbbb"
+		},
+		{
+			message: 'SnemS!!7',
+			tx: '0000ff000',
+			amount: 2000000,
+			signature:"44bdddd123123123bbbbbbbbbbbbbbbbbb"
+		},
+		{
+			message: 'SnemS!!8',
+			tx: '0000ff000',
+			amount: 2000000,
+			signature:"44bdddd123123123bbbbbbbbbbbbbbbbbb"
+		},
+		{
+			message: 'SnemS!!9',
+			tx: '0000ff000',
+			amount: 2000000,
+			signature:"44bdddd123123123bbbbbbbbbbbbbbbbbb"
+		},
+		{
+			message: 'SnemS!!10',
+			tx: '0000ff000',
+			amount: 2000000,
+			signature:"44bdddd123123123bbbbbbbbbbbbbbbbbb"
+		},
+		{
+			message: 'SnemS!!11',
+			tx: '0000ff000',
+			amount: 2000000,
+			signature:"44bdddd123123123bbbbbbbbbbbbbbbbbb"
+		},
+		{
+			message: 'SnemS!!12',
+			tx: '0000ff000',
+			amount: 2000000,
+			signature:"44bdddd123123123bbbbbbbbbbbbbbbbbb"
+		},
+		{
+			message: 'SnemS!!13',
+			tx: '0000ff000',
+			amount: 2000000,
+			signature:"44bdddd123123123bbbbbbbbbbbbbbbbbb"
+		},
+		{
+			message: 'SnemS!!14',
+			tx: '0000ff000',
+			amount: 2000000,
+			signature:"44bdddd123123123bbbbbbbbbbbbbbbbbb"
+		},
+		{
+			message: 'SnemS!!15',
+			tx: '0000ff000',
+			amount: 2000000,
+			signature:"44bdddd123123123bbbbbbbbbbbbbbbbbb"
+		},
+		{
+			message: 'SnemS!!16',
 			tx: '0000ff000',
 			amount: 2000000,
 			signature:"44bdddd123123123bbbbbbbbbbbbbbbbbb"
@@ -50,16 +122,14 @@ const nem = require("nem-sdk").default;
 let posts = []; //取得した投稿内容を riot の tag に渡すための配列
 
 //接続する supernode をばらけさせる
-const getEndpoint = () => {
-  var sn =
-  "https://mnbhsgwgamma.supernode.me";
-	var snArray = sn.split(",");
+let getEndpoint = () => {
+  let mainnet = nem.model.nodes.mainnet;
 
-  const target_node =
-    snArray[Math.floor(Math.random() * (snArray.length)) + 1];
+  // 62.75.171.41 と localhost を除いた node を取得する
+  let target_node = mainnet[Math.floor(Math.random()* (mainnet.length - 2)) + 1];
   console.log(target_node);
 
-  return target_node;
+  return target_node.uri;
 };
 
 const address = "NCHV46TIRIV3H7V3SONZLIN2VGWMK3RMOUOVRXHO"; //SNEMSのアドレス
@@ -94,7 +164,6 @@ const confirmed_transaction_handler = res => {
       signature: res.transaction.signature
     });
   }
-	// riot.update("message", { posts: posts });
 	data.list.unshift(...posts);
 };
 
@@ -108,7 +177,7 @@ const app = new Vue({
 			() => {
 				console.log("Connected");
 		
-				nem.com.websockets.subscribe.account.transactions.recent(
+				 nem.com.websockets.subscribe.account.transactions.recent(
 					connector,
 					recent_transactions_handler
 				);
@@ -157,6 +226,16 @@ const app = new Vue({
 				fontFamily,
 				fontStyle
 			];
+		},
+		version(timestamp) {
+			// const タイムスタンプ
+			// let versionナンバー 1→2→3
+			// const 変更日 = ['2019/04/23','2019/05/18']
+			// 変更日[0] ←バージョン
+			// タイムスタンプが変更日のどの値より小さい＝早いかを判定
+			
+			const verNum = 1;
+			return `ver${verNum}` //クラスネームを返す
 		}
 	}
 });
