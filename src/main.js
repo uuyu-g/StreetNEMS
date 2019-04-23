@@ -1,3 +1,5 @@
+const charSelect = require('./helper');
+
 const degSetting = {
 	in_start: 0,
 	in_end: 255,
@@ -11,8 +13,6 @@ const widthSetting = {
 	out_start: 0,
 	out_end: 1150
 };
-
-
 
 const hexToLimitedRange = (input, obj) => {
 	const slope = (obj.out_end - obj.out_start) / (obj.in_end - obj.in_start);
@@ -144,13 +144,17 @@ const connector = nem.com.websockets.connector.create(endpoint, address);
 const recent_transactions_handler = res => {
   console.log("recent_transactions_handler", res);
   res.data.map(d => {
-    if (d.transaction.message.payload) {
-      posts.push({
-				message: nem.utils.format.hexToUtf8(d.transaction.message.payload),
-        tx: d.meta.hash.data,
-        amount: d.transaction.amount,
-        signature: d.transaction.signature
-      });
+		const payload = d.transaction.message.payload;
+		const message = nem.utils.format.hexToUtf8(payload)
+    if (payload) {
+			if (charSelect.isSupported(message)) {
+				posts.push({
+					message: message,
+					tx: d.meta.hash.data,
+					amount: d.transaction.amount,
+					signature: d.transaction.signature
+				});
+			}
     }
   });
 	data.list.push(...posts);
@@ -208,7 +212,6 @@ const app = new Vue({
 
 			//サイズをammountから
 			const size = 20 + val.amount * 20 / 1000000 || 36;
-			console.log("fontsize is ",size)
 
 			return {
 				top: top + 'px',
