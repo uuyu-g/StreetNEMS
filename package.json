@@ -11,6 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "he": "^1.2.0",
     "nem-sdk": "^1.6.7",
     "parcel": "^1.12.3"
   },
