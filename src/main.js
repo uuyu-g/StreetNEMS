@@ -177,16 +177,16 @@ const app = new Vue({
 			() => {
 				console.log("Connected");
 		
-				// NEMを読み込まない NEMnem.com.websockets.subscribe.account.transactions.recent(
-				// 	connector,
-				// 	recent_transactions_handler
-				// );
-				// nem.com.websockets.subscribe.account.transactions.confirmed(
-				// 	connector,
-				// 	confirmed_transaction_handler
-				// );
+				 nem.com.websockets.subscribe.account.transactions.recent(
+					connector,
+					recent_transactions_handler
+				);
+				nem.com.websockets.subscribe.account.transactions.confirmed(
+					connector,
+					confirmed_transaction_handler
+				);
 		
-				// nem.com.websockets.requests.account.transactions.recent(connector);
+				nem.com.websockets.requests.account.transactions.recent(connector);
 			},
 			err => {
 				console.error(err);
