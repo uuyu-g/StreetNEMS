@@ -12,6 +12,8 @@ const widthSetting = {
 	out_end: 1150
 };
 
+
+
 const hexToLimitedRange = (input, obj) => {
 	const slope = (obj.out_end - obj.out_start) / (obj.in_end - obj.in_start);
 	return obj.out_start + slope * (input - obj.in_start);
@@ -43,16 +45,16 @@ let data = {
 			signature:"44bdddd123123123bbbbbbbbbbbbbbbbbb"
 		},
 		{
-			message: 'SnemS!!5',
+			message: 'e697a5e69cace8aa9e35', //日本語
 			tx: '0000ff000',
 			amount: 2000000,
 			signature:"44bdddd123123123bbbbbbbbbbbbbbbbbb"
 		},
 		{
-			message: 'SnemS!!6',
+			message: 'e381b2e38289e3818ce381aa36', //ひらがな
 			tx: '0000ff000',
 			amount: 2000000,
-			signature:"44bdddd123123123bbbbbbbbbbbbbbbbbb"
+			signature:"655d570083ae0974ac594d6b28d2603fdfd2f59e253ea2153456d80df0230fe3"
 		},
 		{
 			message: 'SnemS!!7',
@@ -177,7 +179,8 @@ const app = new Vue({
 			() => {
 				console.log("Connected");
 		
-				// NEMを読み込まない NEMnem.com.websockets.subscribe.account.transactions.recent(
+				// NEMを読み込まない 
+				// nem.com.websockets.subscribe.account.transactions.recent(
 				// 	connector,
 				// 	recent_transactions_handler
 				// );
