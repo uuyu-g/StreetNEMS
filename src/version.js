@@ -1,10 +1,33 @@
-version(timestamp) {
-	// const タイムスタンプ
-	// let versionナンバー 1→2→3
-	// const 変更日 = ['2019/04/23','2019/05/18']
-	// 変更日[0] ←バージョン
-	// タイムスタンプが変更日のどの値より小さい＝早いかを判定
-	
-	const verNum = 1;
-	return `ver${verNum}` //クラスネームを返す
+const changeDays = [
+	'2017/4/1',
+	'2018/4/1',
+	'2019/4/1',
+	'2020/4/1'
+];
+
+function toDate(str) {
+  var arr = str.split("/");
+  return new Date(arr[0], arr[1] - 1, arr[2]);
 }
+
+function version(date) {
+	const len = changeDays.length;
+	let i = 0;
+	while (i < len) {
+		if (date < toDate(changeDays[i]).getTime()) {
+			return `ver${i + 1}`
+		}
+		i++;
+	}
+	return `ver${len+1}`
+}
+
+const date2016 = new Date(2016, 4,2);
+const date2017 = new Date(2017, 4,2);
+const date2018 = new Date(2018, 4,2);
+const date2030 = new Date(2030, 4,2);
+console.log(version(date2016));// => ver1
+console.log(version(date2017));// => ver2
+console.log(version(date2018));// => ver3
+console.log(version(date2030));// => ver5
+
