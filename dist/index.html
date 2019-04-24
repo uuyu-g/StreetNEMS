@@ -2,7 +2,6 @@
 
 <head>
 	<meta name="viewport" content="width=340px, initial-scale=1.0">
-	<link href="https://fonts.googleapis.com/css?family=Caveat+Brush|Condiment|Covered+By+Your+Grace|Gloria+Hallelujah|Gochi+Hand|Molle:400i|Nanum+Pen+Script|Neucha|Permanent+Marker|Reenie+Beanie|Rock+Salt|Sedgwick+Ave|Walter+Turncoat|Yesteryear" rel="stylesheet">
 	<link rel="stylesheet" href="/style.97fcb138.css">
 	<title>streetnems</title>
 <script src="/style.97fcb138.js"></script></head>
@@ -10,8 +9,8 @@
 <body>
 	<div id="app">
 		<img class="wall" src="/bg1.81c1e3d3.jpg" alt="">
-		<span v-for="item in list" class="ver1" :class="graffitiStyle(item)" :style="style(item)">
-			<div v-if="item.message.length < 10" class="message">{{ item.message }}</div>
+		<span v-for="item in list" class="ver1 base_font" :class="graffitiStyle(item)" :style="style(item)">
+			<!-- <div v-if="item.message.length < 10" class="message">{{ item.message }}</div> -->
 			<span class="tagging">{{ item.tag }}</span>
 		</span>
 	</div>
