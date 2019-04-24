@@ -118,6 +118,7 @@ let data = {
 };
 //NEMメッセージの取り込み
 const nem = require("nem-sdk").default;
+const tagging = require("./tagging");
 
 let posts = []; //取得した投稿内容を riot の tag に渡すための配列
 
