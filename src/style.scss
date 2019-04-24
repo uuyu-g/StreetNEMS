@@ -110,6 +110,13 @@ img.wall {
   position: absolute;
 }
 
+@for $i from 0 through 15 {
+  .style#{$i} {
+    filter: blur(1px);
+    color: black;
+  }
+}
+
 .style1 {
   filter: blur(1.5px);
   color: red;
@@ -136,17 +143,12 @@ img.wall {
     5px 5px 40px rgba(207, 16, 16, 0.562);
   /* color: aliceblue */
 }
-.style6,
-.style7,
-.style8,
-.style9,
-.style10,
-.style11,
-.style12,
-.style13,
-.style14,
-.style15,
-.style16 {
-  filter: blur(1.5px);
-  color: black;
+
+// 
+// tagging
+// 
+@for $i from 0 through 15 {
+  .style#{$i} .tagging {
+    color: black;
+  }
 }
