@@ -1,5 +1,3 @@
-const charSelect = require('./helper');
-
 const degSetting = {
 	in_start: 0,
 	in_end: 255,
