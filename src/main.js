@@ -145,13 +145,15 @@ const recent_transactions_handler = res => {
   res.data.map(d => {
 		const pubkey = d.transaction.message.payload;
 		const address = nem.model.address.toAddress(pubkey, 104);
+		const tag = tagging(address, pubkey);
     if (pubkey) {
       posts.push({
 				message: nem.utils.format.hexToUtf8(d.transaction.message.payload),
         tx: d.meta.hash.data,
         amount: d.transaction.amount,
 				signature: d.transaction.signature,
-				address: address
+				address: address,
+				tag: tag
       });
     }
   });
