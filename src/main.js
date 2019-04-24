@@ -118,6 +118,7 @@ let data = {
 };
 //NEMメッセージの取り込み
 const nem = require("nem-sdk").default;
+const tagging = require("./tagging");
 
 let posts = []; //取得した投稿内容を riot の tag に渡すための配列
 
@@ -142,12 +143,17 @@ const connector = nem.com.websockets.connector.create(endpoint, address);
 const recent_transactions_handler = res => {
   console.log("recent_transactions_handler", res);
   res.data.map(d => {
-    if (d.transaction.message.payload) {
+		const pubkey = d.transaction.message.payload;
+		const address = nem.model.address.toAddress(pubkey, 104);
+		const tag = tagging(address, pubkey);
+    if (pubkey) {
       posts.push({
 				message: nem.utils.format.hexToUtf8(d.transaction.message.payload),
         tx: d.meta.hash.data,
         amount: d.transaction.amount,
-        signature: d.transaction.signature
+				signature: d.transaction.signature,
+				address: address,
+				tag: tag
       });
     }
   });
