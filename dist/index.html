@@ -11,7 +11,7 @@
 	<div id="app">
 		<img class="wall" src="/bg1.81c1e3d3.jpg" alt="">
 		<span v-for="item in list" class="ver1" :class="graffitiStyle(item)" :style="style(item)">
-			<div class="message">{{ item.message }}</div>
+			<div v-if="item.message.length < 10" class="message">{{ item.message }}</div>
 			<span class="tagging">{{ item.tag }}</span>
 		</span>
 	</div>
