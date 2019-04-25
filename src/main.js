@@ -54,13 +54,13 @@ const address = "NCHV46TIRIV3H7V3SONZLIN2VGWMK3RMOUOVRXHO"; //SNEMSのアドレ�
 const recent_transactions_handler = res => {
   console.log("recent_transactions_handler", res);
   res.data.map(d => {
-    const pubkey = d.transaction.message.payload;
-    const address = nem.model.address.toAddress(pubkey, 104);
-    const tag = tagging(address, pubkey);
-    console.log(d);
-    if (pubkey) {
+    const message = d.transaction.message.payload;
+    const pubKey = d.transaction.signer;
+    const address = nem.model.address.toAddress(pubKey, 104);
+    const tag = tagging(address, pubKey);
+    if (message) {
       posts.push({
-        message: nem.utils.format.hexToUtf8(d.transaction.message.payload),
+        message: nem.utils.format.hexToUtf8(message),
         tx: d.meta.hash.data,
         amount: d.transaction.amount,
         signer: d.transaction.signer,
@@ -138,9 +138,8 @@ const app = new Vue({
       const top = hexToLimitedRange(x, scaleSetting.hight);
       const left = hexToLimitedRange(y, scaleSetting.width);
       const deg = hexToLimitedRange(r, degSetting);
-      console.log(x, y);
       //サイズをammountから
-      const size = 20 + (list.amount * 20) / 1000000;
+      const size = 20 + (list.amount * 20 / 1000000);
       // ブラーもammoutから取得
 
       return {
@@ -169,17 +168,25 @@ const app = new Vue({
         "DonGraffiti",
         "Sadoc Wild",
         "SedgwickAveDisplay-Regular",
+        "Tag Hand Graffiti",
         "Sprayerz",
+        "adrip1",
+        "throwupz",
+        "street soul",
+        "BRINGTHANOIZE",
+        "DonGraffiti",
+        "Sadoc Wild",
+        "SedgwickAveDisplay-Regular",
         "Tag Hand Graffiti",
         "adrip1",
         "street soul",
-        "throwupz"
+        "throwupz",
+        "Sprayerz"
       ];
       const signer = list.signer;
       const num1 = parseInt(signer.substr(0, 1), 16);
       const num2 = parseInt(signer.substr(1, 1), 16);
       const num3 = hexToLimitedRange(num2, scaleSetting.scaleX);
-      console.log(num1);
       return {
         fontFamily: taggingFont[num1],
         transform: `scaleX(${num3})`
@@ -195,7 +202,7 @@ const app = new Vue({
        */
       const pubKey = list.signer;
       const address = list.address;
-      const flag = pubKey.substr(2, 1);
+      const flag = parseInt(pubKey.substr(2, 1), 16);
       const tagNameArray = address.substr(1, 4).split(""); // => ["D","S","A","2"]
       // 公開鍵から改行パターンを生成
       let tagName = "";
@@ -206,7 +213,7 @@ const app = new Vue({
         // 改行１
         tagNameArray.push("\n");
         tagName = tagNameArray.join("");
-      } else if (flag < 13) {
+      } else if (flag < 14) {
         // 改行２
         tagNameArray.splice(2, 0, "\n");
         tagNameArray.push("\n");
@@ -219,7 +226,7 @@ const app = new Vue({
         tagName = tagNameArray.join("");
       }
       const tagNum = parseInt(pubKey.substr(0, 2), 16);
-
+      console.log(`${tagName}${tagNum}`);
       return `${tagName}${tagNum}`;
     }
   }
