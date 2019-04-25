@@ -17,6 +17,12 @@ const scaleSetting = {
     in_end: 255,
     out_start: 0,
     out_end: 1100
+  },
+  scaleX: {
+    in_start: 0,
+    in_end: 15,
+    out_start: 0,
+    out_end: 1
   }
 };
 
@@ -169,8 +175,11 @@ const app = new Vue({
       const signature = list.signature;
       const num1 = parseInt(signature.substr(0, 1), 16);
       const num2 = parseInt(signature.substr(1, 1), 16);
+			const num3 = hexToLimitedRange(num2, scaleSetting.scaleX);
+			console.log(num3);
       return {
-				fontFamily: taggingFont[num1],
+        fontFamily: taggingFont[num1],
+        transform: `scaleX(${num3})`
       };
     }
   }
