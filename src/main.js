@@ -21,7 +21,7 @@ const scaleSetting = {
   scaleX: {
     in_start: 0,
     in_end: 15,
-    out_start: 0,
+    out_start: 0.4,
     out_end: 1
   }
 };
@@ -34,10 +34,12 @@ const hexToLimitedRange = (input, obj) => {
 let data = {
   list: [
     {
-      message: "NEM1",
-      tx: "bfcdc535283c21dd9b480d1a9a66ee2adc691edef271daa50569c7c9feea72a8",
-      amount: 1000000,
-      signature: "11bbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+      message: "",
+      tx: "",
+      amount: 0,
+      signature: "",
+      address: "",
+      tag: "DSA2655"
     }
   ]
 };
@@ -175,12 +177,29 @@ const app = new Vue({
       const signature = list.signature;
       const num1 = parseInt(signature.substr(0, 1), 16);
       const num2 = parseInt(signature.substr(1, 1), 16);
-			const num3 = hexToLimitedRange(num2, scaleSetting.scaleX);
-			console.log(num3);
+      const num3 = hexToLimitedRange(num2, scaleSetting.scaleX);
+      console.log(num1);
       return {
         fontFamily: taggingFont[num1],
         transform: `scaleX(${num3})`
       };
+    },
+    kaigyou(list) {
+      /**
+       * 改行するかどうかを判定
+       * 送信者から取得
+       * 改行パターンは4パターン 0,1,2,3
+       * @param タギングのテキスト
+       * @return 改行したテキスト
+       */
+      const pubKey = list.signature;
+      const address = list.address;
+      const tagName = address.substr(1, 4).split(""); // => ["D","S","A","2"]
+      const tagNum = parseInt(pubKey.substr(0, 2), 16);
+      console.log("先頭4文字の配列=>", tagName);
+      console.log("行末数字3文字=>", tagNum);
+      
+      return list.tag;
     }
   }
 });

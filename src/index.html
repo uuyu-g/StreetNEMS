@@ -1,25 +1,25 @@
 <html>
+  <head>
+    <meta name="viewport" content="width=340px, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.scss" />
+    <title>streetnems</title>
+  </head>
 
-<head>
-	<meta name="viewport" content="width=340px, initial-scale=1.0">
-	<link rel="stylesheet" href="style.scss">
-	<title>streetnems</title>
-</head>
+  <body>
+    <div id="app">
+      <img class="wall" src="./bg1.jpg" alt="" />
+      <div
+        v-for="item in list"
+        class="ver1 base_font"
+        :class="graffitiStyle(item)"
+        :style="style(item)"
+      >
+        <!-- <div v-if="item.message.length < 10" class="message">{{ item.message }}</div> -->
+        <span class="tagging" :style="taggingStyle(item)">{{ kaigyou(item) }}</span>
+      </div>
+    </div>
 
-<body>
-	<div id="app">
-		<img class="wall" src="./bg1.jpg" alt="">
-		<div v-for="item in list" 
-			class="ver1 base_font"
-			:class="graffitiStyle(item)"
-			:style="style(item)">
-			<!-- <div v-if="item.message.length < 10" class="message">{{ item.message }}</div> -->
-			<span class="tagging" :style="taggingStyle(item)">{{ item.tag }}</span>
-		</div>
-	</div>
-
-	<script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.min.js"></script>
-	<script src="main.js"></script>
-</body>
-
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.min.js"></script>
+    <script src="main.js"></script>
+  </body>
 </html>
