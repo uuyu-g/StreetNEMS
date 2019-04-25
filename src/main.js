@@ -1,120 +1,47 @@
 const degSetting = {
-	in_start: 0,
-	in_end: 255,
-	out_start: -10,
-	out_end: 10
+  in_start: 0,
+  in_end: 255,
+  out_start: -5,
+  out_end: 5
 };
 
-const widthSetting = {
-	in_start: 0,
-	in_end: 255,
-	out_start: 0,
-	out_end: 1150
+const scaleSetting = {
+  width: {
+    in_start: 0,
+    in_end: 255,
+    out_start: 0,
+    out_end: 1800
+  },
+  hight: {
+    in_start: 0,
+    in_end: 255,
+    out_start: 0,
+    out_end: 1100
+  },
+  scaleX: {
+    in_start: 0,
+    in_end: 15,
+    out_start: 0.8,
+    out_end: 1.5
+  }
 };
 
 const hexToLimitedRange = (input, obj) => {
-	const slope = (obj.out_end - obj.out_start) / (obj.in_end - obj.in_start);
-	return obj.out_start + slope * (input - obj.in_start);
+  const slope = (obj.out_end - obj.out_start) / (obj.in_end - obj.in_start);
+  return obj.out_start + slope * (input - obj.in_start);
 };
 
 let data = {
-	list: [{
-			message: 'NEM1',
-			tx: 'bfcdc535283c21dd9b480d1a9a66ee2adc691edef271daa50569c7c9feea72a8',
-			amount: 1000000,
-			signature:"11bbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
-		},
-		{
-			message: 'FUDFUDFUD2',
-			tx: '7ba3a7328c7ea9616fe1758c5f4f7d1a333d26fb2bc1d42e0862762a42b38430',
-			amount: 0,
-			signature:"22bbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
-		},
-		{
-			message: 'PUMP!!!!3',
-			tx: 'c3cec3c3c1fffea00e4bd06dcdb1c3e5b93b73465eb6276a5cd0f89511611557',
-			amount: 3900000,
-			signature:"33bbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
-		},
-		{
-			message: 'SnemS!!4',
-			tx: '0000ff000',
-			amount: 2000000,
-			signature:"44bdddd123123123bbbbbbbbbbbbbbbbbb"
-		},
-		{
-			message: 'e697a5e69cace8aa9e35', //日本語
-			tx: '0000ff000',
-			amount: 2000000,
-			signature:"44bdddd123123123bbbbbbbbbbbbbbbbbb"
-		},
-		{
-			message: 'e381b2e38289e3818ce381aa36', //ひらがな
-			tx: '0000ff000',
-			amount: 2000000,
-			signature:"655d570083ae0974ac594d6b28d2603fdfd2f59e253ea2153456d80df0230fe3"
-		},
-		{
-			message: 'SnemS!!7',
-			tx: '0000ff000',
-			amount: 2000000,
-			signature:"44bdddd123123123bbbbbbbbbbbbbbbbbb"
-		},
-		{
-			message: 'SnemS!!8',
-			tx: '0000ff000',
-			amount: 2000000,
-			signature:"44bdddd123123123bbbbbbbbbbbbbbbbbb"
-		},
-		{
-			message: 'SnemS!!9',
-			tx: '0000ff000',
-			amount: 2000000,
-			signature:"44bdddd123123123bbbbbbbbbbbbbbbbbb"
-		},
-		{
-			message: 'SnemS!!10',
-			tx: '0000ff000',
-			amount: 2000000,
-			signature:"44bdddd123123123bbbbbbbbbbbbbbbbbb"
-		},
-		{
-			message: 'SnemS!!11',
-			tx: '0000ff000',
-			amount: 2000000,
-			signature:"44bdddd123123123bbbbbbbbbbbbbbbbbb"
-		},
-		{
-			message: 'SnemS!!12',
-			tx: '0000ff000',
-			amount: 2000000,
-			signature:"44bdddd123123123bbbbbbbbbbbbbbbbbb"
-		},
-		{
-			message: 'SnemS!!13',
-			tx: '0000ff000',
-			amount: 2000000,
-			signature:"44bdddd123123123bbbbbbbbbbbbbbbbbb"
-		},
-		{
-			message: 'SnemS!!14',
-			tx: '0000ff000',
-			amount: 2000000,
-			signature:"44bdddd123123123bbbbbbbbbbbbbbbbbb"
-		},
-		{
-			message: 'SnemS!!15',
-			tx: '0000ff000',
-			amount: 2000000,
-			signature:"44bdddd123123123bbbbbbbbbbbbbbbbbb"
-		},
-		{
-			message: 'SnemS!!16',
-			tx: '0000ff000',
-			amount: 2000000,
-			signature:"44bdddd123123123bbbbbbbbbbbbbbbbbb"
-		}
-	]
+  list: [
+    {
+      message: "",
+      tx: "",
+      amount: 0,
+      signature: "",
+      address: "",
+      tag: "DSA2655"
+    }
+  ]
 };
 //NEMメッセージの取り込み
 const nem = require("nem-sdk").default;
@@ -122,42 +49,26 @@ const tagging = require("./tagging");
 
 let posts = []; //取得した投稿内容を riot の tag に渡すための配列
 
-//接続する supernode をばらけさせる
-let getEndpoint = () => {
-  let mainnet = nem.model.nodes.mainnet;
-
-  // 62.75.171.41 と localhost を除いた node を取得する
-  let target_node = mainnet[Math.floor(Math.random()* (mainnet.length - 2)) + 1];
-  console.log(target_node);
-
-  return target_node.uri;
-};
-
 const address = "NCHV46TIRIV3H7V3SONZLIN2VGWMK3RMOUOVRXHO"; //SNEMSのアドレス
-const endpoint = nem.model.objects.create("endpoint")(
-  getEndpoint(),
-  nem.model.nodes.websocketPort
-);
-const connector = nem.com.websockets.connector.create(endpoint, address);
 
 const recent_transactions_handler = res => {
   console.log("recent_transactions_handler", res);
   res.data.map(d => {
-		const pubkey = d.transaction.message.payload;
-		const address = nem.model.address.toAddress(pubkey, 104);
-		const tag = tagging(address, pubkey);
+    const pubkey = d.transaction.message.payload;
+    const address = nem.model.address.toAddress(pubkey, 104);
+    const tag = tagging(address, pubkey);
     if (pubkey) {
       posts.push({
-				message: nem.utils.format.hexToUtf8(d.transaction.message.payload),
+        message: nem.utils.format.hexToUtf8(d.transaction.message.payload),
         tx: d.meta.hash.data,
         amount: d.transaction.amount,
-				signature: d.transaction.signature,
-				address: address,
-				tag: tag
+        signature: d.transaction.signature,
+        address: address,
+        tag: tag
       });
     }
   });
-	data.list.push(...posts);
+  data.list.push(...posts);
 };
 
 const confirmed_transaction_handler = res => {
@@ -170,77 +81,145 @@ const confirmed_transaction_handler = res => {
       signature: res.transaction.signature
     });
   }
-	data.list.unshift(...posts);
+  data.list.unshift(...posts);
 };
 
-console.log("data:",data)
-
 const app = new Vue({
-	el: '#app',
-	data: data,
-	created() {
-		connector.connect().then(
-			() => {
-				console.log("Connected");
-		
-				 nem.com.websockets.subscribe.account.transactions.recent(
-					connector,
-					recent_transactions_handler
-				);
-				nem.com.websockets.subscribe.account.transactions.confirmed(
-					connector,
-					confirmed_transaction_handler
-				);
-		
-				nem.com.websockets.requests.account.transactions.recent(connector);
-			},
-			err => {
-				console.error(err);
-			}
-		);
-	},
-	methods: {
-		style(val) {
-			//位置と角度をハッシュから
-			const tx = val.tx;
-			const x = parseInt(tx.substr(1, 2), 16); //
-			const y = parseInt(tx.substr(3, 2), 16);
-			const r = parseInt(tx.substr(5, 2), 16);
-			const top = hexToLimitedRange(x, widthSetting);
-			const left = hexToLimitedRange(y, widthSetting);
-			const deg = hexToLimitedRange(r, degSetting);
+  el: "#app",
+  data: data,
+  created() {
+    function connect() {
+      let getEndpoint = () => {
+        let mainnet = nem.model.nodes.mainnet;
 
-			//サイズをammountから
-			const size = 20 + val.amount * 20 / 1000000 || 36;
+        // 62.75.171.41 と localhost を除いた node を取得する
+        let target_node =
+          mainnet[Math.floor(Math.random() * (mainnet.length - 2)) + 1];
+        console.log(target_node);
 
-			return {
-				top: top + 'px',
-				left: left + 'px',
-				transform: `rotate(${deg}deg)`,
-				fontSize: `${size}px`
-			};
-		},
-		graffitiStyle(list) {
-			// フォントファミリー
-			const signature = list.signature;
-			const num1 = parseInt(signature.substr(0, 1), 16);
-			const num2 = parseInt(signature.substr(1, 1), 16);
-			const fontFamily = `font${num1}`;
-			const fontStyle = `style${num2}`;
-			return [
-				fontFamily,
-				fontStyle
-			];
-		},
-		version(timestamp) {
-			// const タイムスタンプ
-			// let versionナンバー 1→2→3
-			// const 変更日 = ['2019/04/23','2019/05/18']
-			// 変更日[0] ←バージョン
-			// タイムスタンプが変更日のどの値より小さい＝早いかを判定
-			
-			const verNum = 1;
-			return `ver${verNum}` //クラスネームを返す
-		}
-	}
+        return target_node.uri;
+      };
+      const endpoint = nem.model.objects.create("endpoint")(
+        getEndpoint(),
+        nem.model.nodes.websocketPort
+      );
+      const connector = nem.com.websockets.connector.create(endpoint, address);
+      connector.connect().then(
+        () => {
+          console.log("Connected");
+
+          nem.com.websockets.subscribe.account.transactions.recent(
+            connector,
+            recent_transactions_handler
+          );
+          nem.com.websockets.subscribe.account.transactions.confirmed(
+            connector,
+            confirmed_transaction_handler
+          );
+
+          nem.com.websockets.requests.account.transactions.recent(connector);
+        },
+        err => {
+          console.error(err);
+          connect();
+        }
+      );
+    }
+    connect();
+  },
+  methods: {
+    style(list) {
+      //位置と角度をハッシュから
+      const tx = list.tx;
+      const x = parseInt(tx.substr(10, 2), 16); //
+      const y = parseInt(tx.substr(12, 2), 16);
+      const r = parseInt(tx.substr(14, 2), 16);
+      const top = hexToLimitedRange(x, scaleSetting.hight);
+      const left = hexToLimitedRange(y, scaleSetting.width);
+      const deg = hexToLimitedRange(r, degSetting);
+      console.log(x, y);
+      //サイズをammountから
+      const size = 20 + (list.amount * 20) / 1000000;
+      // ブラーもammoutから取得
+
+      return {
+        top: top + "px",
+        left: left + "px",
+        transform: `rotate(${deg}deg)`,
+        fontSize: `${size}px`
+      };
+    },
+    graffitiStyle(list) {
+      //
+      const tx = list.tx;
+      const num1 = parseInt(tx.substr(0, 1), 16);
+      const num2 = parseInt(tx.substr(1, 1), 16);
+      const fontFamily = `font${num1}`;
+      const fontStyle = `style${num2}`;
+      return [fontFamily, fontStyle];
+    },
+    taggingStyle(list) {
+      /**
+       *  送信者に書体、長体、改行するか否かを紐づける
+       *  スタイルを返す
+       * */
+      const taggingFont = [
+        "BRINGTHANOIZE",
+        "DonGraffiti",
+        "Sadoc Wild",
+        "SedgwickAveDisplay-Regular",
+        "Sprayerz",
+        "Tag Hand Graffiti",
+        "adrip1",
+        "street soul",
+        "throwupz"
+      ];
+      const signature = list.signature;
+      const num1 = parseInt(signature.substr(0, 1), 16);
+      const num2 = parseInt(signature.substr(1, 1), 16);
+      const num3 = hexToLimitedRange(num2, scaleSetting.scaleX);
+      console.log(num1);
+      return {
+        fontFamily: taggingFont[num1],
+        transform: `scaleX(${num3})`
+      };
+    },
+    kaigyou(list) {
+      /**
+       * 改行するかどうかを判定
+       * 送信者から取得
+       * 改行パターンは4パターン 0,1,2,3
+       * @param タギングのテキスト
+       * @return 改行したテキスト
+       */
+      const pubKey = list.signature;
+      const address = list.address;
+      const flag = pubKey.substr(2, 1);
+      const tagNameArray = address.substr(1, 4).split(""); // => ["D","S","A","2"]
+      // 公開鍵から改行パターンを生成
+      let tagName = "";
+      if (flag < 4) {
+        // 改行０
+        tagName = tagNameArray.join("");
+      } else if (flag < 9) {
+        // 改行１
+        tagNameArray.push("\n");
+        tagName = tagNameArray.join("");
+      } else if (flag < 13) {
+        // 改行２
+        tagNameArray.splice(2, 0, "\n");
+        tagNameArray.push("\n");
+        tagName = tagNameArray.join("");
+      } else {
+        // 改行３
+        tagNameArray.splice(3, 0, "\n");
+        tagNameArray.splice(1, 0, "\n");
+        tagNameArray.push("\n");
+        tagName = tagNameArray.join("");
+      }
+      const tagNum = parseInt(pubKey.substr(0, 2), 16);
+
+      return `${tagName}${tagNum}`;
+    }
+  }
 });

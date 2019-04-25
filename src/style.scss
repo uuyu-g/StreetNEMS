@@ -9,32 +9,24 @@ body {
   width: 1920px;
   height: 1200px;
   overflow: hidden;
+  * {
+    position: absolute;
+  }
 }
 
 h1 {
   position: absolute;
 }
 
-#app span {
-  position: absolute;
-}
 
 img.wall {
   position: absolute;
   margin: 0;
 }
 
-.huti {
-  position: absolute;
-  top: 3vw;
-  left: 3vw;
-  font-family: "Sedgwick Ave Display", cursive;
-  font-size: 7vw;
-  mix-blend-mode: overlay;
-  text-shadow: 5px 5px 1px #000, -5px 5px 1px #000, 5px -5px 1px #000,
-    -5px -5px 1px #000;
-  /* mix-blend-mode: overlay; */
-}
+//
+// フォントスタイル
+//
 @font-face {
   font-family: "BRINGTHANOIZE";
   src: url("./font/BRINGTHANOIZE.woff") format("woff");
@@ -48,62 +40,36 @@ img.wall {
   src: url("./font/Sadoc\ Wild.woff") format("woff");
 }
 @font-face {
-  font-family: "BRINGTHANOIZE";
-  src: url("./font/BRINGTHANOIZE.woff") format("woff");
+  font-family: "SedgwickAveDisplay-Regular";
+  src: url("./font/SedgwickAveDisplay-Regular.woff") format("woff");
 }
 @font-face {
-  font-family: "BRINGTHANOIZE";
-  src: url("./font/BRINGTHANOIZE.woff") format("woff");
+  font-family: "Sprayerz";
+  src: url("./font/Sprayerz.woff") format("woff");
+}
+@font-face {
+  font-family: "Tag Hand Graffiti";
+  src: url("./font/Tag\ Hand\ Graffiti\ Trash_fat.woff") format("woff");
+}
+@font-face {
+  font-family: "adrip1";
+  src: url("./font/adrip1.woff") format("woff");
+}
+@font-face {
+  font-family: "street soul";
+  src: url("./font/street\ soul.woff") format("woff");
+}
+@font-face {
+  font-family: "throwupz";
+  src: url("./font/throwupz.woff") format("woff");
 }
 
 /* フォントは16種類? */
-.font1 {
+// ベースフォントを設定
+.base_font {
+  filter: blur(1.5px);
   font-family: "Sadoc Wild";
-}
-.font2 {
-  font-family: "DonGraffiti", cursive;
-}
-.font3 {
-  font-family: "Gochi Hand", cursive;
-}
-.font4 {
-  font-family: "Condiment", cursive;
-}
-.font5 {
-  font-family: "Covered By Your Grace", cursive;
-}
-.font6 {
-  font-family: "Gloria Hallelujah", cursive;
-}
-.font7 {
-  font-family: "Gochi Hand", cursive;
-}
-.font8 {
-  font-family: "Molle:400i", cursive;
-}
-.font9 {
-  font-family: "Nanum Pen Script", cursive;
-}
-.font10 {
-  font-family: "Neucha", cursive;
-}
-.font11 {
-  font-family: "Permanent Marker", cursive;
-}
-.font12 {
-  font-family: "Reenie Beanie", cursive;
-}
-.font13 {
-  font-family: "Rock Salt", cursive;
-}
-.font14 {
-  font-family: "Sedgwick Ave", cursive;
-}
-.font15 {
-  font-family: "Walter Turncoat", cursive;
-}
-.font16 {
-  font-family: "Yesteryear", cursive;
+  mix-blend-mode: hard-light;
 }
 
 .abs {
@@ -112,43 +78,29 @@ img.wall {
 
 @for $i from 0 through 15 {
   .style#{$i} {
-    filter: blur(1px);
     color: black;
   }
 }
 
 .style1 {
-  filter: blur(1.5px);
   color: red;
 }
 
-.style2 {
-  filter: blur(1.5px);
-  color: black;
-}
-
-.style3 {
-  filter: contrast(500%) blur(1.5px);
-  color: lighten(tomato, 1%);
-  text-shadow: 4px 3px 1px #fff, 9px 8px 0px rgba(0, 0, 0, 1);
-}
-
-.style4 {
-  filter: blur(1.5px);
-  color: black;
-}
-.style5 {
-  color: rgba(255, 255, 255, 0.438);
-  text-shadow: 0px 0px 3px rgba(248, 242, 242, 0.863),
-    5px 5px 40px rgba(207, 16, 16, 0.562);
-  /* color: aliceblue */
-}
-
-// 
+//
 // tagging
-// 
-@for $i from 0 through 15 {
-  .style#{$i} .tagging {
-    color: black;
-  }
+//
+.tagging {
+  color: #180909;
+  text-align: center;
+  line-height: 0.6em;
+  filter: opacity(0.9);
+  mix-blend-mode: hard-light;
+  .style1 &{ color: red; }
+  .style2 &{ color: yellow; }
+  .style3 &{ color: blue; }
+  .style4 &{ color: greenyellow; }
 }
+
+
+
+
