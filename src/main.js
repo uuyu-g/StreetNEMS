@@ -21,8 +21,8 @@ const scaleSetting = {
   scaleX: {
     in_start: 0,
     in_end: 15,
-    out_start: 0.4,
-    out_end: 1
+    out_start: 0.8,
+    out_end: 1.5
   }
 };
 
@@ -198,27 +198,22 @@ const app = new Vue({
       const tagNameArray = address.substr(1, 4).split(""); // => ["D","S","A","2"]
       // 公開鍵から改行パターンを生成
       let tagName = "";
-      switch (flag % 4) {
-        case 0:
-          tagName = tagNameArray.join("");
-          break;
-        case 1:
-          tagNameArray.push("\n");
-          tagName = tagNameArray.join("");
-          break;
-        case 2:
-          tagNameArray.splice(2,0,"\n");
-          tagName = tagNameArray.join("");
-          break;
-        default:
-          tagName = tagNameArray.join("");
-          break;
-      }
-      // tagNameに結合
+      if (flag < 4) {                     // 改行０
+        tagName = tagNameArray.join(""); 
+      } else if (flag < 9) {              // 改行１
+        tagNameArray.push("\n");
+        tagName = tagNameArray.join(""); 
+      } else if (flag < 13) {             // 改行２
+        tagNameArray.splice(2,0,"\n");
+        tagNameArray.push("\n");
+        tagName = tagNameArray.join(""); 
+      } else {                            // 改行３
+        tagNameArray.splice(3,0,"\n")
+        tagNameArray.splice(1,0,"\n")
+        tagNameArray.push("\n");
+        tagName = tagNameArray.join(""); 
+      } 
       const tagNum = parseInt(pubKey.substr(0, 2), 16);
-      console.log("先頭4文字の配列=>", tagNameArray);
-      console.log("先頭4文字", tagName);
-      console.log("行末数字3文字=>", tagNum);
 
       return `${tagName}${tagNum}`;
     }
