@@ -1,8 +1,8 @@
 const degSetting = {
   in_start: 0,
   in_end: 255,
-  out_start: -10,
-  out_end: 10
+  out_start: -5,
+  out_end: 5
 };
 
 const scaleSetting = {
@@ -241,6 +241,9 @@ const app = new Vue({
       const fontFamily = `font${num1}`;
       const fontStyle = `style${num2}`;
       return [fontFamily, fontStyle];
-    }
+		},
+		taggingStyle(list) {
+			return ["style_tagging2"];
+		}
   }
 });
