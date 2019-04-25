@@ -194,12 +194,33 @@ const app = new Vue({
        */
       const pubKey = list.signature;
       const address = list.address;
-      const tagName = address.substr(1, 4).split(""); // => ["D","S","A","2"]
+      const flag = pubKey.substr(2, 1);
+      const tagNameArray = address.substr(1, 4).split(""); // => ["D","S","A","2"]
+      // 公開鍵から改行パターンを生成
+      let tagName = "";
+      switch (flag % 4) {
+        case 0:
+          tagName = tagNameArray.join("");
+          break;
+        case 1:
+          tagNameArray.push("\n");
+          tagName = tagNameArray.join("");
+          break;
+        case 2:
+          tagNameArray.splice(2,0,"\n");
+          tagName = tagNameArray.join("");
+          break;
+        default:
+          tagName = tagNameArray.join("");
+          break;
+      }
+      // tagNameに結合
       const tagNum = parseInt(pubKey.substr(0, 2), 16);
-      console.log("先頭4文字の配列=>", tagName);
+      console.log("先頭4文字の配列=>", tagNameArray);
+      console.log("先頭4文字", tagName);
       console.log("行末数字3文字=>", tagNum);
-      
-      return list.tag;
+
+      return `${tagName}${tagNum}`;
     }
   }
 });
