@@ -120,18 +120,19 @@ const app = new Vue({
     );
   },
   methods: {
-    style(val) {
+    style(list) {
       //位置と角度をハッシュから
-      const tx = val.tx;
+      const tx = list.tx;
       const x = parseInt(tx.substr(10, 2), 16); //
       const y = parseInt(tx.substr(12, 2), 16);
       const r = parseInt(tx.substr(14, 2), 16);
       const top = hexToLimitedRange(x, scaleSetting.hight);
       const left = hexToLimitedRange(y, scaleSetting.width);
       const deg = hexToLimitedRange(r, degSetting);
-			console.log(x,y);
+      console.log(x, y);
       //サイズをammountから
-      const size = 20 + (val.amount * 20) / 1000000;
+      const size = 20 + (list.amount * 20) / 1000000;
+      // ブラーもammoutから取得
 
       return {
         top: top + "px",
@@ -141,23 +142,36 @@ const app = new Vue({
       };
     },
     graffitiStyle(list) {
-      // 
-      const signature = list.signature;
-      const num1 = parseInt(signature.substr(0, 1), 16);
-      const num2 = parseInt(signature.substr(1, 1), 16);
+      //
+      const tx = list.tx;
+      const num1 = parseInt(tx.substr(0, 1), 16);
+      const num2 = parseInt(tx.substr(1, 1), 16);
       const fontFamily = `font${num1}`;
       const fontStyle = `style${num2}`;
       return [fontFamily, fontStyle];
-		},
-		taggingStyle(list) {
-			/**
-			 *  送信者に書体、長体、改行するか否かを紐づける
-			 *  スタイルを返す
-			 * */ 
-
-			return {
-				
-			};
-		}
+    },
+    taggingStyle(list) {
+      /**
+       *  送信者に書体、長体、改行するか否かを紐づける
+       *  スタイルを返す
+       * */
+      const taggingFont = [
+        "BRINGTHANOIZE",
+        "DonGraffiti",
+        "Sadoc Wild",
+        "SedgwickAveDisplay-Regular",
+        "Sprayerz",
+        "Tag Hand Graffiti",
+        "adrip1",
+        "street soul",
+        "throwupz"
+      ];
+      const signature = list.signature;
+      const num1 = parseInt(signature.substr(0, 1), 16);
+      const num2 = parseInt(signature.substr(1, 1), 16);
+      return {
+				fontFamily: taggingFont[num1],
+      };
+    }
   }
 });
