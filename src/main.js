@@ -49,24 +49,7 @@ const tagging = require("./tagging");
 
 let posts = []; //取得した投稿内容を riot の tag に渡すための配列
 
-//接続する supernode をばらけさせる
-let getEndpoint = () => {
-  let mainnet = nem.model.nodes.mainnet;
-
-  // 62.75.171.41 と localhost を除いた node を取得する
-  let target_node =
-    mainnet[Math.floor(Math.random() * (mainnet.length - 2)) + 1];
-  console.log(target_node);
-
-  return target_node.uri;
-};
-
 const address = "NCHV46TIRIV3H7V3SONZLIN2VGWMK3RMOUOVRXHO"; //SNEMSのアドレス
-const endpoint = nem.model.objects.create("endpoint")(
-  getEndpoint(),
-  nem.model.nodes.websocketPort
-);
-const connector = nem.com.websockets.connector.create(endpoint, address);
 
 const recent_transactions_handler = res => {
   console.log("recent_transactions_handler", res);
@@ -101,31 +84,48 @@ const confirmed_transaction_handler = res => {
   data.list.unshift(...posts);
 };
 
-console.log("data:", data);
-
 const app = new Vue({
   el: "#app",
   data: data,
   created() {
-    connector.connect().then(
-      () => {
-        console.log("Connected");
+    function connect() {
+      let getEndpoint = () => {
+        let mainnet = nem.model.nodes.mainnet;
 
-        nem.com.websockets.subscribe.account.transactions.recent(
-          connector,
-          recent_transactions_handler
-        );
-        nem.com.websockets.subscribe.account.transactions.confirmed(
-          connector,
-          confirmed_transaction_handler
-        );
+        // 62.75.171.41 と localhost を除いた node を取得する
+        let target_node =
+          mainnet[Math.floor(Math.random() * (mainnet.length - 2)) + 1];
+        console.log(target_node);
 
-        nem.com.websockets.requests.account.transactions.recent(connector);
-      },
-      err => {
-        console.error(err);
-      }
-    );
+        return target_node.uri;
+      };
+      const endpoint = nem.model.objects.create("endpoint")(
+        getEndpoint(),
+        nem.model.nodes.websocketPort
+      );
+      const connector = nem.com.websockets.connector.create(endpoint, address);
+      connector.connect().then(
+        () => {
+          console.log("Connected");
+
+          nem.com.websockets.subscribe.account.transactions.recent(
+            connector,
+            recent_transactions_handler
+          );
+          nem.com.websockets.subscribe.account.transactions.confirmed(
+            connector,
+            confirmed_transaction_handler
+          );
+
+          nem.com.websockets.requests.account.transactions.recent(connector);
+        },
+        err => {
+          console.error(err);
+          connect();
+        }
+      );
+    }
+    connect();
   },
   methods: {
     style(list) {
@@ -198,21 +198,25 @@ const app = new Vue({
       const tagNameArray = address.substr(1, 4).split(""); // => ["D","S","A","2"]
       // 公開鍵から改行パターンを生成
       let tagName = "";
-      if (flag < 4) {                     // 改行０
-        tagName = tagNameArray.join(""); 
-      } else if (flag < 9) {              // 改行１
+      if (flag < 4) {
+        // 改行０
+        tagName = tagNameArray.join("");
+      } else if (flag < 9) {
+        // 改行１
         tagNameArray.push("\n");
-        tagName = tagNameArray.join(""); 
-      } else if (flag < 13) {             // 改行２
-        tagNameArray.splice(2,0,"\n");
+        tagName = tagNameArray.join("");
+      } else if (flag < 13) {
+        // 改行２
+        tagNameArray.splice(2, 0, "\n");
         tagNameArray.push("\n");
-        tagName = tagNameArray.join(""); 
-      } else {                            // 改行３
-        tagNameArray.splice(3,0,"\n")
-        tagNameArray.splice(1,0,"\n")
+        tagName = tagNameArray.join("");
+      } else {
+        // 改行３
+        tagNameArray.splice(3, 0, "\n");
+        tagNameArray.splice(1, 0, "\n");
         tagNameArray.push("\n");
-        tagName = tagNameArray.join(""); 
-      } 
+        tagName = tagNameArray.join("");
+      }
       const tagNum = parseInt(pubKey.substr(0, 2), 16);
 
       return `${tagName}${tagNum}`;
