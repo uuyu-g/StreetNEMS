@@ -32,97 +32,6 @@ let data = {
       tx: "bfcdc535283c21dd9b480d1a9a66ee2adc691edef271daa50569c7c9feea72a8",
       amount: 1000000,
       signature: "11bbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
-    },
-    {
-      message: "FUDFUDFUD2",
-      tx: "7ba3a7328c7ea9616fe1758c5f4f7d1a333d26fb2bc1d42e0862762a42b38430",
-      amount: 0,
-      signature: "22bbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
-    },
-    {
-      message: "PUMP!!!!3",
-      tx: "c3cec3c3c1fffea00e4bd06dcdb1c3e5b93b73465eb6276a5cd0f89511611557",
-      amount: 3900000,
-      signature: "33bbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
-    },
-    {
-      message: "SnemS!!4",
-      tx: "0000ff000",
-      amount: 2000000,
-      signature: "44bdddd123123123bbbbbbbbbbbbbbbbbb"
-    },
-    {
-      message: "e697a5e69cace8aa9e35", //日本語
-      tx: "0000ff000",
-      amount: 2000000,
-      signature: "44bdddd123123123bbbbbbbbbbbbbbbbbb"
-    },
-    {
-      message: "e381b2e38289e3818ce381aa36", //ひらがな
-      tx: "0000ff000",
-      amount: 2000000,
-      signature:
-        "655d570083ae0974ac594d6b28d2603fdfd2f59e253ea2153456d80df0230fe3"
-    },
-    {
-      message: "SnemS!!7",
-      tx: "0000ff000",
-      amount: 2000000,
-      signature: "44bdddd123123123bbbbbbbbbbbbbbbbbb"
-    },
-    {
-      message: "SnemS!!8",
-      tx: "0000ff000",
-      amount: 2000000,
-      signature: "44bdddd123123123bbbbbbbbbbbbbbbbbb"
-    },
-    {
-      message: "SnemS!!9",
-      tx: "0000ff000",
-      amount: 2000000,
-      signature: "44bdddd123123123bbbbbbbbbbbbbbbbbb"
-    },
-    {
-      message: "SnemS!!10",
-      tx: "0000ff000",
-      amount: 2000000,
-      signature: "44bdddd123123123bbbbbbbbbbbbbbbbbb"
-    },
-    {
-      message: "SnemS!!11",
-      tx: "0000ff000",
-      amount: 2000000,
-      signature: "44bdddd123123123bbbbbbbbbbbbbbbbbb"
-    },
-    {
-      message: "SnemS!!12",
-      tx: "0000ff000",
-      amount: 2000000,
-      signature: "44bdddd123123123bbbbbbbbbbbbbbbbbb"
-    },
-    {
-      message: "SnemS!!13",
-      tx: "0000ff000",
-      amount: 2000000,
-      signature: "44bdddd123123123bbbbbbbbbbbbbbbbbb"
-    },
-    {
-      message: "SnemS!!14",
-      tx: "0000ff000",
-      amount: 2000000,
-      signature: "44bdddd123123123bbbbbbbbbbbbbbbbbb"
-    },
-    {
-      message: "SnemS!!15",
-      tx: "0000ff000",
-      amount: 2000000,
-      signature: "44bdddd123123123bbbbbbbbbbbbbbbbbb"
-    },
-    {
-      message: "SnemS!!16",
-      tx: "0000ff000",
-      amount: 2000000,
-      signature: "44bdddd123123123bbbbbbbbbbbbbbbbbb"
     }
   ]
 };
@@ -232,9 +141,7 @@ const app = new Vue({
       };
     },
     graffitiStyle(list) {
-      //
-
-      // フォントファミリー
+      // 
       const signature = list.signature;
       const num1 = parseInt(signature.substr(0, 1), 16);
       const num2 = parseInt(signature.substr(1, 1), 16);
