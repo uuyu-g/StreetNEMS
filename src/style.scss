@@ -9,15 +9,15 @@ body {
   width: 1920px;
   height: 1200px;
   overflow: hidden;
+  * {
+    position: absolute;
+  }
 }
 
 h1 {
   position: absolute;
 }
 
-#app span {
-  position: absolute;
-}
 
 img.wall {
   position: absolute;
@@ -75,59 +75,59 @@ $ffTagging: "BRINGTHANOIZE", "DonGraffiti", "Sadoc Wild",
   "SedgwickAveDisplay-Regular", "Sprayerz", "Tag Hand Graffiti", "adrip1",
   "street soul", "throwupz";
 
-.tagging {
-  .font1 &,
-  .font2 & {
-    filter: blur(1px);
-    font-family: "BRINGTHANOIZE";
-  }
+// .tagging {
+//   .font1 &,
+//   .font2 & {
+//     filter: blur(1px);
+//     font-family: "BRINGTHANOIZE";
+//   }
 
-  .font3 &,
-  .font4 & {
-    filter: blur(1px);
-    font-family: "DonGraffiti";
-  }
+//   .font3 &,
+//   .font4 & {
+//     filter: blur(1px);
+//     font-family: "DonGraffiti";
+//   }
 
-  .font5 &,
-  .font6 & {
-    filter: blur(1px);
-    font-family: "Sadoc Wild";
-  }
+//   .font5 &,
+//   .font6 & {
+//     filter: blur(1px);
+//     font-family: "Sadoc Wild";
+//   }
 
-  .font7 &,
-  .font8 & {
-    filter: blur(1px);
-    font-family: "SedgwickAveDisplay-Regular";
-  }
+//   .font7 &,
+//   .font8 & {
+//     filter: blur(1px);
+//     font-family: "SedgwickAveDisplay-Regular";
+//   }
 
-  .font9 &,
-  .font10 & {
-    filter: blur(1px);
-    font-family: "Sprayerz";
-  }
+//   .font9 &,
+//   .font10 & {
+//     filter: blur(1px);
+//     font-family: "Sprayerz";
+//   }
 
-  .font11 &,
-  .font12 & {
-    filter: blur(1px);
-    font-family: "Tag Hand Graffiti";
-  }
+//   .font11 &,
+//   .font12 & {
+//     filter: blur(1px);
+//     font-family: "Tag Hand Graffiti";
+//   }
 
-  .font13 &,
-  .font14 & {
-    filter: blur(1px);
-    font-family: "adrip1";
-  }
+//   .font13 &,
+//   .font14 & {
+//     filter: blur(1px);
+//     font-family: "adrip1";
+//   }
 
-  .font15 & {
-    filter: blur(1px);
-    font-family: "street soul";
-  }
+//   .font15 & {
+//     filter: blur(1px);
+//     font-family: "street soul";
+//   }
 
-  .font16 & {
-    filter: blur(1px);
-    font-family: "throwupz";
-  }
-}
+//   .font16 & {
+//     filter: blur(1px);
+//     font-family: "throwupz";
+//   }
+// }
 
 // .message {
 //   .font1 &{
@@ -152,8 +152,18 @@ $ffTagging: "BRINGTHANOIZE", "DonGraffiti", "Sadoc Wild",
 //
 // tagging
 //
-@for $i from 0 through 15 {
-  .style#{$i} .tagging {
-    color: black;
-  }
+.tagging {
+  color: black;
+}
+
+.style_tagging1 {
+  font-family: "BRINGTHANOIZE";
+  transform: scaleX(0.5);
+  filter: blur(1px);
+}
+
+.style_tagging2 {
+  font-family: "DonGraffiti";
+  transform: scaleX(0.8);
+  filter: blur(1px);
 }
