@@ -67,73 +67,10 @@ img.wall {
 /* フォントは16種類? */
 // ベースフォントを設定
 .base_font {
-  filter: blur(1px);
+  filter: blur(1.5px);
   font-family: "Sadoc Wild";
+  mix-blend-mode: hard-light;
 }
-
-$ffTagging: "BRINGTHANOIZE", "DonGraffiti", "Sadoc Wild",
-  "SedgwickAveDisplay-Regular", "Sprayerz", "Tag Hand Graffiti", "adrip1",
-  "street soul", "throwupz";
-
-// .tagging {
-//   .font1 &,
-//   .font2 & {
-//     filter: blur(1px);
-//     font-family: "BRINGTHANOIZE";
-//   }
-
-//   .font3 &,
-//   .font4 & {
-//     filter: blur(1px);
-//     font-family: "DonGraffiti";
-//   }
-
-//   .font5 &,
-//   .font6 & {
-//     filter: blur(1px);
-//     font-family: "Sadoc Wild";
-//   }
-
-//   .font7 &,
-//   .font8 & {
-//     filter: blur(1px);
-//     font-family: "SedgwickAveDisplay-Regular";
-//   }
-
-//   .font9 &,
-//   .font10 & {
-//     filter: blur(1px);
-//     font-family: "Sprayerz";
-//   }
-
-//   .font11 &,
-//   .font12 & {
-//     filter: blur(1px);
-//     font-family: "Tag Hand Graffiti";
-//   }
-
-//   .font13 &,
-//   .font14 & {
-//     filter: blur(1px);
-//     font-family: "adrip1";
-//   }
-
-//   .font15 & {
-//     filter: blur(1px);
-//     font-family: "street soul";
-//   }
-
-//   .font16 & {
-//     filter: blur(1px);
-//     font-family: "throwupz";
-//   }
-// }
-
-// .message {
-//   .font1 &{
-//     font-family: ;
-//   }
-// }
 
 .abs {
   position: absolute;
@@ -153,19 +90,17 @@ $ffTagging: "BRINGTHANOIZE", "DonGraffiti", "Sadoc Wild",
 // tagging
 //
 .tagging {
-  color: black;
+  color: #180909;
   text-align: center;
   line-height: 0.6em;
+  filter: opacity(0.9);
+  mix-blend-mode: hard-light;
+  .style1 &{ color: red; }
+  .style2 &{ color: yellow; }
+  .style3 &{ color: blue; }
+  .style4 &{ color: greenyellow; }
 }
 
-.style_tagging1 {
-  font-family: "BRINGTHANOIZE";
-  transform: scaleX(0.5);
-  filter: blur(1px);
-}
 
-.style_tagging2 {
-  font-family: "DonGraffiti";
-  transform: scaleX(0.8);
-  filter: blur(1px);
-}
+
+
