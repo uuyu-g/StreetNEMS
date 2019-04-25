@@ -150,7 +150,14 @@ const app = new Vue({
       return [fontFamily, fontStyle];
 		},
 		taggingStyle(list) {
-			return ["style_tagging2"];
+			/**
+			 *  送信者に書体、長体、改行するか否かを紐づける
+			 *  スタイルを返す
+			 * */ 
+
+			return {
+				
+			};
 		}
   }
 });
