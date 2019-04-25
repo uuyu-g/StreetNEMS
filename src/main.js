@@ -37,7 +37,7 @@ let data = {
       message: "",
       tx: "",
       amount: 0,
-      signature: "",
+      signer: "",
       address: "",
       tag: "DSA2655"
     }
@@ -57,12 +57,13 @@ const recent_transactions_handler = res => {
     const pubkey = d.transaction.message.payload;
     const address = nem.model.address.toAddress(pubkey, 104);
     const tag = tagging(address, pubkey);
+    console.log(d);
     if (pubkey) {
       posts.push({
         message: nem.utils.format.hexToUtf8(d.transaction.message.payload),
         tx: d.meta.hash.data,
         amount: d.transaction.amount,
-        signature: d.transaction.signature,
+        signer: d.transaction.signer,
         address: address,
         tag: tag
       });
@@ -78,7 +79,7 @@ const confirmed_transaction_handler = res => {
       message: nem.utils.format.hexToUtf8(res.transaction.message.payload),
       tx: res.meta.hash.data,
       amount: res.transaction.amount,
-      signature: res.transaction.signature
+      signer: res.transaction.signer
     });
   }
   data.list.unshift(...posts);
@@ -174,9 +175,9 @@ const app = new Vue({
         "street soul",
         "throwupz"
       ];
-      const signature = list.signature;
-      const num1 = parseInt(signature.substr(0, 1), 16);
-      const num2 = parseInt(signature.substr(1, 1), 16);
+      const signer = list.signer;
+      const num1 = parseInt(signer.substr(0, 1), 16);
+      const num2 = parseInt(signer.substr(1, 1), 16);
       const num3 = hexToLimitedRange(num2, scaleSetting.scaleX);
       console.log(num1);
       return {
@@ -192,7 +193,7 @@ const app = new Vue({
        * @param タギングのテキスト
        * @return 改行したテキスト
        */
-      const pubKey = list.signature;
+      const pubKey = list.signer;
       const address = list.address;
       const flag = pubKey.substr(2, 1);
       const tagNameArray = address.substr(1, 4).split(""); // => ["D","S","A","2"]
