@@ -1,33 +1,32 @@
+const nem = require("nem-sdk").default;
+
 let posts = []; //取得した投稿内容を riot の tag に渡すための配列
-let data = {
-  list: [
-    {
-      message: "",
-      tx: "",
-      amount: 0,
-      signer: "",
-      address: ""
-    }
-  ],
-  scaleSetting: {
-    width: {
-      in: { start: 0, end: 255 },
-      out: { start: 0, end: 1800 }
-    },
-    hight: {
-      in: { start: 0, end: 255 },
-      out: { start: 0, end: 1100 }
-    },
-    scaleX: {
-      in: { start: 0, end: 15 },
-      out: { start: 0.8, end: 1.5 }
-    },
-    deg: {
-      in: { start: 0, end: 255 },
-      out: { start: -5, end: 5 }
-    }
+let list = [{
+  message: "",
+  tx: "",
+  amount: 0,
+  signer: "",
+  address: ""
+}];
+const scaleSetting = {
+  width: {
+    in: { start: 0, end: 255 },
+    out: { start: 0, end: 1800 }
+  },
+  hight: {
+    in: { start: 0, end: 255 },
+    out: { start: 0, end: 1100 }
+  },
+  scaleX: {
+    in: { start: 0, end: 15 },
+    out: { start: 0.8, end: 1.5 }
+  },
+  deg: {
+    in: { start: 0, end: 255 },
+    out: { start: -5, end: 5 }
   }
-};
+}
+
 const hexToLimitedRange = (input, setting) => {
   const slope =
     (setting.out.end - setting.out.start) / (setting.in.end - setting.in.start);
@@ -35,8 +34,6 @@ const hexToLimitedRange = (input, setting) => {
 };
 
 //NEMメッセージの取り込み
-const nem = require("nem-sdk").default;
-
 const address = "NCHV46TIRIV3H7V3SONZLIN2VGWMK3RMOUOVRXHO"; //SNEMSのアドレス
 
 const recent_transactions_handler = res => {
@@ -55,7 +52,7 @@ const recent_transactions_handler = res => {
       });
     }
   });
-  data.list.push(...posts);
+  list.push(...posts);
 };
 
 const confirmed_transaction_handler = res => {
@@ -72,22 +69,23 @@ const confirmed_transaction_handler = res => {
       address: address
     });
   }
-  data.list.unshift(...posts);
+  list.unshift(...posts);
 };
 
 const app = new Vue({
   el: "#app",
-  data: data,
+  data: {
+    list: list,
+    scaleSetting: scaleSetting
+  },
   created() {
     function connect() {
       const getEndpoint = () => {
         const mainnet = nem.model.nodes.mainnet;
-
         // 62.75.171.41 と localhost を除いた node を取得する
         const target_node =
           mainnet[Math.floor(Math.random() * (mainnet.length - 2)) + 1];
         console.log(target_node);
-
         return target_node.uri;
       };
       const endpoint = nem.model.objects.create("endpoint")(
