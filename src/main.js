@@ -1,54 +1,39 @@
-const degSetting = {
-  in_start: 0,
-  in_end: 255,
-  out_start: -5,
-  out_end: 5
-};
-
-const scaleSetting = {
-  width: {
-    in_start: 0,
-    in_end: 255,
-    out_start: 0,
-    out_end: 1800
-  },
-  hight: {
-    in_start: 0,
-    in_end: 255,
-    out_start: 0,
-    out_end: 1100
-  },
-  scaleX: {
-    in_start: 0,
-    in_end: 15,
-    out_start: 0.8,
-    out_end: 1.5
-  }
-};
-
-const hexToLimitedRange = (input, obj) => {
-  const slope = (obj.out_end - obj.out_start) / (obj.in_end - obj.in_start);
-  return obj.out_start + slope * (input - obj.in_start);
-};
-
-let data = {
-  list: [
-    {
-      message: "",
-      tx: "",
-      amount: 0,
-      signer: "",
-      address: "",
-      tag: "DSA2655"
-    }
-  ]
-};
-//NEMメッセージの取り込み
 const nem = require("nem-sdk").default;
-const tagging = require("./tagging");
 
 let posts = []; //取得した投稿内容を riot の tag に渡すための配列
+let list = [{
+  message: "",
+  tx: "",
+  amount: 0,
+  signer: "",
+  address: ""
+}];
+const scaleSetting = {
+  width: {
+    in: { start: 0, end: 255 },
+    out: { start: 0, end: 1800 }
+  },
+  hight: {
+    in: { start: 0, end: 255 },
+    out: { start: 0, end: 1100 }
+  },
+  scaleX: {
+    in: { start: 0, end: 15 },
+    out: { start: 0.8, end: 1.5 }
+  },
+  deg: {
+    in: { start: 0, end: 255 },
+    out: { start: -5, end: 5 }
+  }
+}
 
+const hexToLimitedRange = (input, setting) => {
+  const slope =
+    (setting.out.end - setting.out.start) / (setting.in.end - setting.in.start);
+  return setting.out.start + slope * (input - setting.in.start);
+};
+
+//NEMメッセージの取り込み
 const address = "NCHV46TIRIV3H7V3SONZLIN2VGWMK3RMOUOVRXHO"; //SNEMSのアドレス
 
 const recent_transactions_handler = res => {
@@ -57,47 +42,50 @@ const recent_transactions_handler = res => {
     const message = d.transaction.message.payload;
     const pubKey = d.transaction.signer;
     const address = nem.model.address.toAddress(pubKey, 104);
-    const tag = tagging(address, pubKey);
     if (message) {
       posts.push({
         message: nem.utils.format.hexToUtf8(message),
         tx: d.meta.hash.data,
         amount: d.transaction.amount,
         signer: d.transaction.signer,
-        address: address,
-        tag: tag
+        address: address
       });
     }
   });
-  data.list.push(...posts);
+  list.push(...posts);
 };
 
 const confirmed_transaction_handler = res => {
   console.log("confirmed_transaction_handler", res);
-  if (res.transaction.message.payload) {
+  const message = res.transaction.message.payload;
+  const pubKey = res.transaction.signer;
+  const address = nem.model.address.toAddress(pubKey, 104);
+  if (message) {
     posts.unshift({
-      message: nem.utils.format.hexToUtf8(res.transaction.message.payload),
+      message: nem.utils.format.hexToUtf8(message),
       tx: res.meta.hash.data,
       amount: res.transaction.amount,
-      signer: res.transaction.signer
+      signer: res.transaction.signer,
+      address: address
     });
   }
-  data.list.unshift(...posts);
+  list.unshift(...posts);
 };
 
 const app = new Vue({
   el: "#app",
-  data: data,
+  data: {
+    list: list,
+    scaleSetting: scaleSetting
+  },
   created() {
     function connect() {
-      let getEndpoint = () => {
-        let mainnet = nem.model.nodes.mainnet;
-
+      const getEndpoint = () => {
+        const mainnet = nem.model.nodes.mainnet;
         // 62.75.171.41 と localhost を除いた node を取得する
-        let target_node =
+        const target_node =
           mainnet[Math.floor(Math.random() * (mainnet.length - 2)) + 1];
         console.log(target_node);
-
         return target_node.uri;
       };
       const endpoint = nem.model.objects.create("endpoint")(
@@ -117,7 +105,6 @@ const app = new Vue({
             connector,
             confirmed_transaction_handler
           );
-
           nem.com.websockets.requests.account.transactions.recent(connector);
         },
         err => {
@@ -132,15 +119,14 @@ const app = new Vue({
     style(list) {
       //位置と角度をハッシュから
       const tx = list.tx;
-      const x = parseInt(tx.substr(10, 2), 16); //
+      const x = parseInt(tx.substr(10, 2), 16);
       const y = parseInt(tx.substr(12, 2), 16);
       const r = parseInt(tx.substr(14, 2), 16);
-      const top = hexToLimitedRange(x, scaleSetting.hight);
-      const left = hexToLimitedRange(y, scaleSetting.width);
-      const deg = hexToLimitedRange(r, degSetting);
+      const top = hexToLimitedRange(x, this.scaleSetting.hight);
+      const left = hexToLimitedRange(y, this.scaleSetting.width);
+      const deg = hexToLimitedRange(r, this.scaleSetting.deg);
       //サイズをammountから
-      const size = 20 + (list.amount * 20 / 1000000);
-      // ブラーもammoutから取得
+      const size = 20 + (list.amount * 20) / 1000000;
 
       return {
         top: top + "px",
@@ -186,7 +172,7 @@ const app = new Vue({
       const signer = list.signer;
       const num1 = parseInt(signer.substr(0, 1), 16);
       const num2 = parseInt(signer.substr(1, 1), 16);
-      const num3 = hexToLimitedRange(num2, scaleSetting.scaleX);
+      const num3 = hexToLimitedRange(num2, this.scaleSetting.scaleX);
       return {
         fontFamily: taggingFont[num1],
         transform: `scaleX(${num3})`
@@ -226,7 +212,6 @@ const app = new Vue({
         tagName = tagNameArray.join("");
       }
       const tagNum = parseInt(pubKey.substr(0, 2), 16);
-      console.log(`${tagName}${tagNum}`);
       return `${tagName}${tagNum}`;
     }
   }
