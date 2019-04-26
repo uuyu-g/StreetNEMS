@@ -1,46 +1,43 @@
-const degSetting = {
-  in_start: 0,
-  in_end: 255,
-  out_start: -5,
-  out_end: 5
-};
-
-const scaleSetting = {
-  width: {
-    in_start: 0,
-    in_end: 255,
-    out_start: 0,
-    out_end: 1800
-  },
-  hight: {
-    in_start: 0,
-    in_end: 255,
-    out_start: 0,
-    out_end: 1100
-  },
-  scaleX: {
-    in_start: 0,
-    in_end: 15,
-    out_start: 0.8,
-    out_end: 1.5
-  }
-};
-
 const hexToLimitedRange = (input, obj) => {
   const slope = (obj.out_end - obj.out_start) / (obj.in_end - obj.in_start);
   return obj.out_start + slope * (input - obj.in_start);
 };
 
 let data = {
-  list: [
-    {
+  list: [{
       message: "",
       tx: "",
       amount: 0,
       signer: "",
       address: ""
+    }],
+  scaleSetting: {
+    width: {
+      in_start: 0,
+      in_end: 255,
+      out_start: 0,
+      out_end: 1800
+    },
+    hight: {
+      in_start: 0,
+      in_end: 255,
+      out_start: 0,
+      out_end: 1100
+    },
+    scaleX: {
+      in_start: 0,
+      in_end: 15,
+      out_start: 0.8,
+      out_end: 1.5
     }
-  ]
+  },
+  degSetting: {
+    in_start: 0,
+    in_end: 255,
+    out_start: -5,
+    out_end: 5
+  }
+
 };
 //NEMメッセージの取り込み
 const nem = require("nem-sdk").default;
@@ -131,9 +128,9 @@ const app = new Vue({
       const x = parseInt(tx.substr(10, 2), 16); //
       const y = parseInt(tx.substr(12, 2), 16);
       const r = parseInt(tx.substr(14, 2), 16);
-      const top = hexToLimitedRange(x, scaleSetting.hight);
-      const left = hexToLimitedRange(y, scaleSetting.width);
-      const deg = hexToLimitedRange(r, degSetting);
+      const top = hexToLimitedRange(x, this.scaleSetting.hight);
+      const left = hexToLimitedRange(y, this.scaleSetting.width);
+      const deg = hexToLimitedRange(r, this.degSetting);
       //サイズをammountから
       const size = 20 + (list.amount * 20 / 1000000);
       // ブラーもammoutから取得
@@ -182,7 +179,7 @@ const app = new Vue({
       const signer = list.signer;
       const num1 = parseInt(signer.substr(0, 1), 16);
       const num2 = parseInt(signer.substr(1, 1), 16);
-      const num3 = hexToLimitedRange(num2, scaleSetting.scaleX);
+      const num3 = hexToLimitedRange(num2, this.scaleSetting.scaleX);
       return {
         fontFamily: taggingFont[num1],
         transform: `scaleX(${num3})`
