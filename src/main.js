@@ -1,8 +1,4 @@
-const hexToLimitedRange = (input, obj) => {
-  const slope = (obj.out.end - obj.out.start) / (obj.in.end - obj.in.start);
-  return obj.out.start + slope * (input - obj.in.start);
-};
-
+let posts = []; //取得した投稿内容を riot の tag に渡すための配列
 let data = {
   list: [
     {
@@ -15,27 +11,31 @@ let data = {
   ],
   scaleSetting: {
     width: {
-      in:{start: 0,end: 255},
-      out:{start: 0,end: 1800},
+      in: { start: 0, end: 255 },
+      out: { start: 0, end: 1800 }
     },
     hight: {
-      in:{start: 0,end: 255},
-      out:{start: 0,end: 1100},
+      in: { start: 0, end: 255 },
+      out: { start: 0, end: 1100 }
     },
     scaleX: {
-      in:{start: 0,end: 15},
-      out:{start: 0.8,end: 1.5},
+      in: { start: 0, end: 15 },
+      out: { start: 0.8, end: 1.5 }
     },
     deg: {
-      in:{start: 0,end: 255},
-      out:{start: -5,end: 5},
+      in: { start: 0, end: 255 },
+      out: { start: -5, end: 5 }
     }
   }
 };
+const hexToLimitedRange = (input, setting) => {
+  const slope =
+    (setting.out.end - setting.out.start) / (setting.in.end - setting.in.start);
+  return setting.out.start + slope * (input - setting.in.start);
+};
+
 //NEMメッセージの取り込み
 const nem = require("nem-sdk").default;
-
-let posts = []; //取得した投稿内容を riot の tag に渡すための配列
 
 const address = "NCHV46TIRIV3H7V3SONZLIN2VGWMK3RMOUOVRXHO"; //SNEMSのアドレス
 
@@ -60,12 +60,16 @@ const recent_transactions_handler = res => {
 
 const confirmed_transaction_handler = res => {
   console.log("confirmed_transaction_handler", res);
-  if (res.transaction.message.payload) {
+  const message = res.transaction.message.payload;
+  const pubKey = res.transaction.signer;
+  const address = nem.model.address.toAddress(pubKey, 104);
+  if (message) {
     posts.unshift({
-      message: nem.utils.format.hexToUtf8(res.transaction.message.payload),
+      message: nem.utils.format.hexToUtf8(message),
       tx: res.meta.hash.data,
       amount: res.transaction.amount,
-      signer: res.transaction.signer
+      signer: res.transaction.signer,
+      address: address
     });
   }
   data.list.unshift(...posts);
@@ -76,11 +80,11 @@ const app = new Vue({
   data: data,
   created() {
     function connect() {
-      let getEndpoint = () => {
-        let mainnet = nem.model.nodes.mainnet;
+      const getEndpoint = () => {
+        const mainnet = nem.model.nodes.mainnet;
 
         // 62.75.171.41 と localhost を除いた node を取得する
-        let target_node =
+        const target_node =
           mainnet[Math.floor(Math.random() * (mainnet.length - 2)) + 1];
         console.log(target_node);
 
@@ -103,7 +107,6 @@ const app = new Vue({
             connector,
             confirmed_transaction_handler
           );
-
           nem.com.websockets.requests.account.transactions.recent(connector);
         },
         err => {
@@ -118,7 +121,7 @@ const app = new Vue({
     style(list) {
       //位置と角度をハッシュから
       const tx = list.tx;
-      const x = parseInt(tx.substr(10, 2), 16); //
+      const x = parseInt(tx.substr(10, 2), 16);
       const y = parseInt(tx.substr(12, 2), 16);
       const r = parseInt(tx.substr(14, 2), 16);
       const top = hexToLimitedRange(x, this.scaleSetting.hight);
@@ -126,7 +129,6 @@ const app = new Vue({
       const deg = hexToLimitedRange(r, this.scaleSetting.deg);
       //サイズをammountから
       const size = 20 + (list.amount * 20) / 1000000;
-      // ブラーもammoutから取得
 
       return {
         top: top + "px",
@@ -212,7 +214,6 @@ const app = new Vue({
         tagName = tagNameArray.join("");
       }
       const tagNum = parseInt(pubKey.substr(0, 2), 16);
-      console.log(`${tagName}${tagNum}`);
       return `${tagName}${tagNum}`;
     }
   }
