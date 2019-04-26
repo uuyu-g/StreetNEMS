@@ -1,43 +1,36 @@
 const hexToLimitedRange = (input, obj) => {
-  const slope = (obj.out_end - obj.out_start) / (obj.in_end - obj.in_start);
-  return obj.out_start + slope * (input - obj.in_start);
+  const slope = (obj.out.end - obj.out.start) / (obj.in.end - obj.in.start);
+  return obj.out.start + slope * (input - obj.in.start);
 };
 
 let data = {
-  list: [{
+  list: [
+    {
       message: "",
       tx: "",
       amount: 0,
       signer: "",
       address: ""
-    }],
+    }
+  ],
   scaleSetting: {
     width: {
-      in_start: 0,
-      in_end: 255,
-      out_start: 0,
-      out_end: 1800
+      in:{start: 0,end: 255},
+      out:{start: 0,end: 1800},
     },
     hight: {
-      in_start: 0,
-      in_end: 255,
-      out_start: 0,
-      out_end: 1100
+      in:{start: 0,end: 255},
+      out:{start: 0,end: 1100},
     },
     scaleX: {
-      in_start: 0,
-      in_end: 15,
-      out_start: 0.8,
-      out_end: 1.5
+      in:{start: 0,end: 15},
+      out:{start: 0.8,end: 1.5},
+    },
+    deg: {
+      in:{start: 0,end: 255},
+      out:{start: -5,end: 5},
     }
-  },
-  degSetting: {
-    in_start: 0,
-    in_end: 255,
-    out_start: -5,
-    out_end: 5
   }
-
 };
 //NEMメッセージの取り込み
 const nem = require("nem-sdk").default;
@@ -130,9 +123,9 @@ const app = new Vue({
       const r = parseInt(tx.substr(14, 2), 16);
       const top = hexToLimitedRange(x, this.scaleSetting.hight);
       const left = hexToLimitedRange(y, this.scaleSetting.width);
-      const deg = hexToLimitedRange(r, this.degSetting);
+      const deg = hexToLimitedRange(r, this.scaleSetting.deg);
       //サイズをammountから
-      const size = 20 + (list.amount * 20 / 1000000);
+      const size = 20 + (list.amount * 20) / 1000000;
       // ブラーもammoutから取得
 
       return {
