@@ -38,14 +38,12 @@ let data = {
       tx: "",
       amount: 0,
       signer: "",
-      address: "",
-      tag: "DSA2655"
+      address: ""
     }
   ]
 };
 //NEMメッセージの取り込み
 const nem = require("nem-sdk").default;
-const tagging = require("./tagging");
 
 let posts = []; //取得した投稿内容を riot の tag に渡すための配列
 
@@ -57,15 +55,13 @@ const recent_transactions_handler = res => {
     const message = d.transaction.message.payload;
     const pubKey = d.transaction.signer;
     const address = nem.model.address.toAddress(pubKey, 104);
-    const tag = tagging(address, pubKey);
     if (message) {
       posts.push({
         message: nem.utils.format.hexToUtf8(message),
         tx: d.meta.hash.data,
         amount: d.transaction.amount,
         signer: d.transaction.signer,
-        address: address,
-        tag: tag
+        address: address
       });
     }
   });
