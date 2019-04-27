@@ -37,11 +37,6 @@ class IncomingTransactionObject {
   }
 
   view() {
-    if (this.amount === undefined) {
-      return;
-    }
-    // console.log(`${this.unixtime},${this.metaId},${this.type},${this.sender}`);
-    // return `${this.unixtime},${this.metaId},${this.type},${this.sender}`;
     return {
       message: this.message,
       tx: this.hash,
@@ -49,11 +44,6 @@ class IncomingTransactionObject {
       signer: this.signer,
       address: this.sender
     }
-  }
-
-  hyouji() {
-    const obj = { sender: this.sender };
-    return obj;
   }
 
   get unixtime() {
@@ -79,7 +69,7 @@ class IncomingTransaction {
         res.data.data.forEach(tx => {
           const txObject = new IncomingTransactionObject(tx);
           console.log(txObject.sender);
-          lastmetaId = txObject.metaId;
+          lastmetaId = txObject.metaId; 
           ary.push(txObject.view());
         });
 
@@ -102,21 +92,6 @@ class IncomingTransaction {
     }
   }
 }
-
-// const inTx = new IncomingTransaction();
-// inTx.fetch().then(() => {
-//   console.log(inTx.list);
-// });
-
-// 返り値は
-// {
-// 	message: nem.utils.format.hexToUtf8(message),
-// 	tx: d.meta.hash.data,
-// 	amount: d.transaction.amount,
-// 	signer: d.transaction.signer,
-// 	address: address
-// }
-// 上記のオブジェクト
 
 module.exports = {
   IncomingTransaction
