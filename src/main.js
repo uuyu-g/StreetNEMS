@@ -1,13 +1,18 @@
 const nem = require("nem-sdk").default;
+const income = require("./incomming");
+const inTx = new income.IncomingTransaction();
 
 let posts = []; //取得した投稿内容を riot の tag に渡すための配列
-let list = [{
-  message: "",
-  tx: "",
-  amount: 0,
-  signer: "",
-  address: ""
-}];
+let list = [
+  {
+    message: "",
+    tx: "",
+    amount: 0,
+    signer: "",
+    address: ""
+  }
+];
+
 const scaleSetting = {
   width: {
     in: { start: 0, end: 255 },
@@ -25,7 +30,7 @@ const scaleSetting = {
     in: { start: 0, end: 255 },
     out: { start: -5, end: 5 }
   }
-}
+};
 
 const hexToLimitedRange = (input, setting) => {
   const slope =
@@ -80,6 +85,7 @@ const app = new Vue({
   },
   created() {
     function connect() {
+      
       const getEndpoint = () => {
         const mainnet = nem.model.nodes.mainnet;
         // 62.75.171.41 と localhost を除いた node を取得する
@@ -96,7 +102,10 @@ const app = new Vue({
       connector.connect().then(
         () => {
           console.log("Connected");
-
+          inTx.fetch(list).then(() => {
+            console.log(list);
+            // Array.prototype.push.apply(list,inTx.list);
+          });
           nem.com.websockets.subscribe.account.transactions.recent(
             connector,
             recent_transactions_handler

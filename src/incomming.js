@@ -72,7 +72,7 @@ class IncomingTransaction {
     this.list = [];
   }
 
-  fetch(metaId) {
+  fetch(ary,metaId) {
     return Axios.get(this.generateUrl(metaId)).then(
       res => {
         let lastmetaId = null;
@@ -80,16 +80,14 @@ class IncomingTransaction {
           const txObject = new IncomingTransactionObject(tx);
           console.log(txObject.sender);
           lastmetaId = txObject.metaId;
-          this.list.push(txObject.view());
+          ary.push(txObject.view());
         });
 
         if (lastmetaId && lastmetaId !== metaId) {
-          return new Promise (resolve => {
             setTimeout(() => {
-              resolve(this.fetch(lastmetaId));
+              this.fetch(ary,lastmetaId);
             }, 1000);
           }
-          )}
       },
       err => {
         console.error(err);
