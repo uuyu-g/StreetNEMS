@@ -1,3 +1,7 @@
+@import "loading";
+
+[v-cloak] { display: none }
+
 html,
 body {
   margin: 0;
@@ -20,7 +24,6 @@ h1 {
 
 
 img.wall {
-  position: absolute;
   margin: 0;
 }
 
@@ -36,7 +39,7 @@ img.wall {
   src: url("./font/DonGraffiti.woff") format("woff");
 }
 @font-face {
-  font-family: "Sadoc Wild";
+  font-family: "Sadoc_Wild";
   src: url("./font/Sadoc\ Wild.woff") format("woff");
 }
 @font-face {
@@ -48,7 +51,7 @@ img.wall {
   src: url("./font/Sprayerz.woff") format("woff");
 }
 @font-face {
-  font-family: "Tag Hand Graffiti";
+  font-family: "Tag_Hand_Graffiti";
   src: url("./font/Tag\ Hand\ Graffiti\ Trash_fat.woff") format("woff");
 }
 @font-face {
@@ -56,7 +59,7 @@ img.wall {
   src: url("./font/adrip1.woff") format("woff");
 }
 @font-face {
-  font-family: "street soul";
+  font-family: "street_soul";
   src: url("./font/street\ soul.woff") format("woff");
 }
 @font-face {
@@ -68,7 +71,7 @@ img.wall {
 // ベースフォントを設定
 .base_font {
   filter: blur(1.5px);
-  font-family: "Sadoc Wild";
+  font-family: "Sadoc_Wild";
   mix-blend-mode: hard-light;
 }
 
@@ -99,8 +102,28 @@ img.wall {
   .style2 &{ color: yellow; }
   .style3 &{ color: blue; }
   .style4 &{ color: greenyellow; }
+  .style5 &{ color: white; }
 }
 
+.wall {
+  animation: fadeIn 1s ease 2s 1 normal;
+  -webkit-animation: fadeIn 4s ease 0s 1 normal;
+}
+
+.tagging {
+  animation: fadeIn 2s ease 0s 1 normal;
+  -webkit-animation: fadeIn 2s ease 0s 1 normal;
+}
+
+@keyframes fadeIn {
+  0% {opacity: 0}
+  100% {opacity: 1}
+}
+
+@-webkit-keyframes fadeIn {
+  0% {opacity: 0}
+  100% {opacity: 1}
+}
 
 
 
