@@ -1,3 +1,4 @@
+const nem = require("nem-sdk").default;
 const income = require("./incomming");
 
 let list = [
@@ -46,12 +47,18 @@ const app = new Vue({
   },
 
   created() {
-    const inTx = new income.IncomingTransaction();
+    const getEndpoint = () => {
+      const mainnet = nem.model.nodes.mainnet;
+      // 62.75.171.41 と localhost を除いた node を取得する
+      const target_node =
+        mainnet[Math.floor(Math.random() * (mainnet.length - 2)) + 1];
+      console.log(target_node);
+      return target_node.uri;
+    };
+    const inTx = new income.IncomingTransaction(getEndpoint());
     inTx.fetch(list).then(() => {
       this.loading = false;
     });
-  },
-  mounted() {
   },
   methods: {
     style(list) {
