@@ -43,7 +43,7 @@ class IncomingTransactionObject {
       amount: this.amount,
       signer: this.signer,
       address: this.sender
-    }
+    };
   }
 
   get unixtime() {
@@ -59,25 +59,26 @@ class IncomingTransactionObject {
 class IncomingTransaction {
   constructor() {
     this.url = `http://alice2.nem.ninja:7890/account/transfers/incoming?address=${ADDRESS}`;
-    this.list = [];
   }
 
-  fetch(ary,metaId) {
+  fetch(ary, metaId) {
     return Axios.get(this.generateUrl(metaId)).then(
       res => {
         let lastmetaId = null;
         res.data.data.forEach(tx => {
           const txObject = new IncomingTransactionObject(tx);
           console.log(txObject.sender);
-          lastmetaId = txObject.metaId; 
+          lastmetaId = txObject.metaId;
           ary.push(txObject.view());
         });
 
         if (lastmetaId && lastmetaId !== metaId) {
+          return new Promise(res => {
             setTimeout(() => {
-              this.fetch(ary,lastmetaId);
+              res(this.fetch(ary, lastmetaId));
             }, 1000);
-          }
+          });
+        }
       },
       err => {
         console.error(err);
@@ -95,4 +96,4 @@ class IncomingTransaction {
 
 module.exports = {
   IncomingTransaction
-}
+};

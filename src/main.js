@@ -1,8 +1,5 @@
-const nem = require("nem-sdk").default;
 const income = require("./incomming");
-const inTx = new income.IncomingTransaction();
 
-let posts = []; //取得した投稿内容を riot の tag に渡すための配列
 let list = [
   {
     message: "",
@@ -39,90 +36,22 @@ const hexToLimitedRange = (input, setting) => {
 };
 
 //NEMメッセージの取り込み
-const address = "NCHV46TIRIV3H7V3SONZLIN2VGWMK3RMOUOVRXHO"; //SNEMSのアドレス
-
-const recent_transactions_handler = res => {
-  console.log("recent_transactions_handler", res);
-  res.data.map(d => {
-    const message = d.transaction.message.payload;
-    const pubKey = d.transaction.signer;
-    const address = nem.model.address.toAddress(pubKey, 104);
-    if (message) {
-      posts.push({
-        message: nem.utils.format.hexToUtf8(message),
-        tx: d.meta.hash.data,
-        amount: d.transaction.amount,
-        signer: d.transaction.signer,
-        address: address
-      });
-    }
-  });
-  list.push(...posts);
-};
-
-const confirmed_transaction_handler = res => {
-  console.log("confirmed_transaction_handler", res);
-  const message = res.transaction.message.payload;
-  const pubKey = res.transaction.signer;
-  const address = nem.model.address.toAddress(pubKey, 104);
-  if (message) {
-    posts.unshift({
-      message: nem.utils.format.hexToUtf8(message),
-      tx: res.meta.hash.data,
-      amount: res.transaction.amount,
-      signer: res.transaction.signer,
-      address: address
-    });
-  }
-  list.unshift(...posts);
-};
 
 const app = new Vue({
   el: "#app",
   data: {
     list: list,
-    scaleSetting: scaleSetting
+    scaleSetting: scaleSetting,
+    loading: true
   },
+
   created() {
-    function connect() {
-      
-      const getEndpoint = () => {
-        const mainnet = nem.model.nodes.mainnet;
-        // 62.75.171.41 と localhost を除いた node を取得する
-        const target_node =
-          mainnet[Math.floor(Math.random() * (mainnet.length - 2)) + 1];
-        console.log(target_node);
-        return target_node.uri;
-      };
-      const endpoint = nem.model.objects.create("endpoint")(
-        getEndpoint(),
-        nem.model.nodes.websocketPort
-      );
-      const connector = nem.com.websockets.connector.create(endpoint, address);
-      connector.connect().then(
-        () => {
-          console.log("Connected");
-          inTx.fetch(list).then(() => {
-            console.log(list);
-            // Array.prototype.push.apply(list,inTx.list);
-          });
-          nem.com.websockets.subscribe.account.transactions.recent(
-            connector,
-            recent_transactions_handler
-          );
-          nem.com.websockets.subscribe.account.transactions.confirmed(
-            connector,
-            confirmed_transaction_handler
-          );
-          nem.com.websockets.requests.account.transactions.recent(connector);
-        },
-        err => {
-          console.error(err);
-          connect();
-        }
-      );
-    }
-    connect();
+    const inTx = new income.IncomingTransaction();
+    inTx.fetch(list).then(() => {
+      this.loading = false;
+    });
+  },
+  mounted() {
   },
   methods: {
     style(list) {
@@ -161,30 +90,32 @@ const app = new Vue({
       const taggingFont = [
         "BRINGTHANOIZE",
         "DonGraffiti",
-        "Sadoc Wild",
+        "Sadoc_Wild",
+        "throwupz",
         "SedgwickAveDisplay-Regular",
-        "Tag Hand Graffiti",
-        "Sprayerz",
+        "Tag_Hand_Graffiti",
         "adrip1",
         "throwupz",
-        "street soul",
+        "street_soul",
         "BRINGTHANOIZE",
         "DonGraffiti",
-        "Sadoc Wild",
+        "Sadoc_Wild",
         "SedgwickAveDisplay-Regular",
-        "Tag Hand Graffiti",
+        "Tag_Hand_Graffiti",
         "adrip1",
-        "street soul",
+        "street_soul",
         "throwupz",
-        "Sprayerz"
       ];
       const signer = list.signer;
+      const xemAmount = list.amount / 1000000
       const num1 = parseInt(signer.substr(0, 1), 16);
       const num2 = parseInt(signer.substr(1, 1), 16);
       const num3 = hexToLimitedRange(num2, this.scaleSetting.scaleX);
+      const size = xemAmount < 46 ? xemAmount * 5 + 70 : 300;
       return {
         fontFamily: taggingFont[num1],
-        transform: `scaleX(${num3})`
+        transform: `scaleX(${num3})`,
+        fontSize: `${size}px`
       };
     },
     kaigyou(list) {
