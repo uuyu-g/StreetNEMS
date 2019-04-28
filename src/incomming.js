@@ -57,8 +57,8 @@ class IncomingTransactionObject {
 }
 
 class IncomingTransaction {
-  constructor() {
-    this.url = `http://alice2.nem.ninja:7890/account/transfers/incoming?address=${ADDRESS}`;
+  constructor(uri) {
+    this.url = `${uri}:7890/account/transfers/incoming?address=${ADDRESS}`;
   }
 
   fetch(ary, metaId) {
