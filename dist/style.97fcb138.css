@@ -1,0 +1,272 @@
+@charset "UTF-8";
+.loader {
+  color: #ff0200;
+  font-size: 90px;
+  text-indent: -9999em;
+  overflow: hidden;
+  width: 1em;
+  height: 1em;
+  border-radius: 50%;
+  margin: 72px auto;
+  position: relative;
+  -webkit-transform: translateZ(0);
+  -ms-transform: translateZ(0);
+  transform: translateZ(0);
+  -webkit-animation: load6 1.7s infinite ease, round 1.7s infinite ease;
+  animation: load6 1.7s infinite ease, round 1.7s infinite ease;
+}
+
+@-webkit-keyframes load6 {
+  0% {
+    box-shadow: 0 -0.83em 0 -0.4em, 0 -0.83em 0 -0.42em, 0 -0.83em 0 -0.44em, 0 -0.83em 0 -0.46em, 0 -0.83em 0 -0.477em;
+  }
+  5%, 95% {
+    box-shadow: 0 -0.83em 0 -0.4em, 0 -0.83em 0 -0.42em, 0 -0.83em 0 -0.44em, 0 -0.83em 0 -0.46em, 0 -0.83em 0 -0.477em;
+  }
+  10%, 59% {
+    box-shadow: 0 -0.83em 0 -0.4em, -0.087em -0.825em 0 -0.42em, -0.173em -0.812em 0 -0.44em, -0.256em -0.789em 0 -0.46em, -0.297em -0.775em 0 -0.477em;
+  }
+  20% {
+    box-shadow: 0 -0.83em 0 -0.4em, -0.338em -0.758em 0 -0.42em, -0.555em -0.617em 0 -0.44em, -0.671em -0.488em 0 -0.46em, -0.749em -0.34em 0 -0.477em;
+  }
+  38% {
+    box-shadow: 0 -0.83em 0 -0.4em, -0.377em -0.74em 0 -0.42em, -0.645em -0.522em 0 -0.44em, -0.775em -0.297em 0 -0.46em, -0.82em -0.09em 0 -0.477em;
+  }
+  100% {
+    box-shadow: 0 -0.83em 0 -0.4em, 0 -0.83em 0 -0.42em, 0 -0.83em 0 -0.44em, 0 -0.83em 0 -0.46em, 0 -0.83em 0 -0.477em;
+  }
+}
+@keyframes load6 {
+  0% {
+    box-shadow: 0 -0.83em 0 -0.4em, 0 -0.83em 0 -0.42em, 0 -0.83em 0 -0.44em, 0 -0.83em 0 -0.46em, 0 -0.83em 0 -0.477em;
+  }
+  5%, 95% {
+    box-shadow: 0 -0.83em 0 -0.4em, 0 -0.83em 0 -0.42em, 0 -0.83em 0 -0.44em, 0 -0.83em 0 -0.46em, 0 -0.83em 0 -0.477em;
+  }
+  10%, 59% {
+    box-shadow: 0 -0.83em 0 -0.4em, -0.087em -0.825em 0 -0.42em, -0.173em -0.812em 0 -0.44em, -0.256em -0.789em 0 -0.46em, -0.297em -0.775em 0 -0.477em;
+  }
+  20% {
+    box-shadow: 0 -0.83em 0 -0.4em, -0.338em -0.758em 0 -0.42em, -0.555em -0.617em 0 -0.44em, -0.671em -0.488em 0 -0.46em, -0.749em -0.34em 0 -0.477em;
+  }
+  38% {
+    box-shadow: 0 -0.83em 0 -0.4em, -0.377em -0.74em 0 -0.42em, -0.645em -0.522em 0 -0.44em, -0.775em -0.297em 0 -0.46em, -0.82em -0.09em 0 -0.477em;
+  }
+  100% {
+    box-shadow: 0 -0.83em 0 -0.4em, 0 -0.83em 0 -0.42em, 0 -0.83em 0 -0.44em, 0 -0.83em 0 -0.46em, 0 -0.83em 0 -0.477em;
+  }
+}
+@-webkit-keyframes round {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@keyframes round {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+[v-cloak] {
+  display: none;
+}
+
+html,
+body {
+  margin: 0;
+  background-color: #000;
+}
+
+#app {
+  position: relative;
+  width: 1920px;
+  height: 1200px;
+  overflow: hidden;
+}
+#app * {
+  position: absolute;
+}
+
+h1 {
+  position: absolute;
+}
+
+img.wall {
+  margin: 0;
+}
+
+@font-face {
+  font-family: "BRINGTHANOIZE";
+  src: url("/BRINGTHANOIZE.f590c237.woff") format("woff");
+}
+@font-face {
+  font-family: "DonGraffiti";
+  src: url("/DonGraffiti.642b8338.woff") format("woff");
+}
+@font-face {
+  font-family: "Sadoc_Wild";
+  src: url("/Sadoc_Wild.98537b4e.woff") format("woff");
+}
+@font-face {
+  font-family: "SedgwickAveDisplay-Regular";
+  src: url("/SedgwickAveDisplay-Regular.9478ee29.woff") format("woff");
+}
+@font-face {
+  font-family: "Sprayerz";
+  src: url("/Sprayerz.5ea65b06.woff") format("woff");
+}
+@font-face {
+  font-family: "Tag_Hand_Graffiti";
+  src: url("/Tag_Hand_Graffiti_Trash_fat.d8e8b990.woff") format("woff");
+}
+@font-face {
+  font-family: "adrip1";
+  src: url("/adrip1.43e4b1bd.woff") format("woff");
+}
+@font-face {
+  font-family: "street_soul";
+  src: url("/street_soul.5c899899.woff") format("woff");
+}
+@font-face {
+  font-family: "throwupz";
+  src: url("/throwupz.ba485b65.woff") format("woff");
+}
+/* フォントは16種類? */
+.base_font {
+  filter: blur(1.5px);
+  font-family: "Sadoc_Wild";
+  mix-blend-mode: hard-light;
+}
+
+.abs {
+  position: absolute;
+}
+
+.style0 {
+  color: black;
+}
+
+.style1 {
+  color: black;
+}
+
+.style2 {
+  color: black;
+}
+
+.style3 {
+  color: black;
+}
+
+.style4 {
+  color: black;
+}
+
+.style5 {
+  color: black;
+}
+
+.style6 {
+  color: black;
+}
+
+.style7 {
+  color: black;
+}
+
+.style8 {
+  color: black;
+}
+
+.style9 {
+  color: black;
+}
+
+.style10 {
+  color: black;
+}
+
+.style11 {
+  color: black;
+}
+
+.style12 {
+  color: black;
+}
+
+.style13 {
+  color: black;
+}
+
+.style14 {
+  color: black;
+}
+
+.style15 {
+  color: black;
+}
+
+.style1 {
+  color: red;
+}
+
+.tagging {
+  color: #180909;
+  text-align: center;
+  line-height: 0.6em;
+  filter: opacity(0.9);
+  mix-blend-mode: hard-light;
+}
+.style1 .tagging {
+  color: red;
+}
+.style2 .tagging {
+  color: yellow;
+}
+.style3 .tagging {
+  color: blue;
+}
+.style4 .tagging {
+  color: greenyellow;
+}
+.style5 .tagging {
+  color: white;
+}
+
+.wall {
+  animation: fadeIn 1s ease 2s 1 normal;
+  -webkit-animation: fadeIn 4s ease 0s 1 normal;
+}
+
+.tagging {
+  animation: fadeIn 2s ease 0s 1 normal;
+  -webkit-animation: fadeIn 2s ease 0s 1 normal;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@-webkit-keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/*# sourceMappingURL=/style.97fcb138.css.map */
