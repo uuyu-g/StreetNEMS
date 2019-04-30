@@ -1,4 +1,3 @@
-const nem = require("nem-sdk").default;
 const income = require("./incomming");
 
 let list = [
@@ -30,6 +29,70 @@ const scaleSetting = {
   }
 };
 
+const mainnetList =  [
+"163.44.170.40",
+"153.122.13.96",
+"133.130.91.240",
+"45.76.184.50",
+"183.181.38.140",
+"beny.supernode.me",
+"160.16.201.189",
+"118.27.16.176",
+"54.255.196.128",
+"reach.supernode.me",
+"199.233.237.83",
+"172.82.183.27",
+"nemstrunk2.supernode.me",
+"103.27.76.170",
+"150.95.147.85",
+"153.126.188.239",
+"shibuya.supernode.me",
+"45.124.66.70",
+"nemlovely4.supernode.me",
+"52.78.229.61",
+"153.126.157.53",
+"45.124.65.166",
+"88.86.222.147",
+"160.16.126.235",
+"owl.supernode.me",
+"45.124.65.125",
+"103.207.68.57",
+"pegatennnag.supernode.me",
+"207.148.99.87",
+"157.7.131.206",
+"150.95.128.62",
+"153.122.13.90",
+"128.199.244.45",
+"210.16.120.204",
+"153.122.86.21",
+"nemlovely5.supernode.me",
+"45.77.248.215",
+"163.44.168.183",
+"103.207.68.56",
+"160.16.147.251",
+"160.16.76.122",
+"157.7.135.123",
+"188.166.235.219",
+"153.122.60.153",
+"157.7.135.224",
+"45.32.229.163",
+"153.126.160.251",
+"103.192.177.252",
+"153.122.13.94",
+"47.75.223.145",
+"sn1.tamami-foundation.org",
+"163.44.175.223",
+"133.167.83.62",
+"150.95.136.134",
+"153.122.115.170",
+"snnode.supernode.me",
+"133.167.106.40",
+"45.33.105.19",
+"52.42.99.254",
+"153.122.85.149",
+"13.76.243.137"
+];
+
 const hexToLimitedRange = (input, setting) => {
   const slope =
     (setting.out.end - setting.out.start) / (setting.in.end - setting.in.start);
@@ -48,12 +111,12 @@ const app = new Vue({
 
   created() {
     const getEndpoint = () => {
-      const mainnet = nem.model.nodes.mainnet;
+      const mainnet = mainnetList;
       // 62.75.171.41 と localhost を除いた node を取得する
       const target_node =
         mainnet[Math.floor(Math.random() * (mainnet.length - 2)) + 1];
-      console.log(target_node);
-      return target_node.uri;
+      console.log(`http://${target_node}`);
+      return `http://${target_node}`;
     };
     const inTx = new income.IncomingTransaction(getEndpoint());
     inTx.fetch(list).then(() => {

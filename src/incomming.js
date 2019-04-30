@@ -1,9 +1,9 @@
 const nem = require("nem-sdk").default;
-const networkId = nem.model.network.data.mainnet.id;
+const networkId = 104 //nem.model.network.data.mainnet.id;
 const Axios = require("axios");
 const NEM_EPOCH = Date.UTC(2015, 2, 29, 0, 6, 25, 0);
-const TRANSFER = nem.model.transactionTypes.transfer;
-const MULTISIG_TRANSACTION = nem.model.transactionTypes.multisigTransaction;
+const TRANSFER = 257 //nem.model.transactionTypes.transfer;
+const MULTISIG_TRANSACTION = 4100 //nem.model.transactionTypes.multisigTransaction;
 //# ここを調べたいものに変える
 const ADDRESS = "NCHV46TIRIV3H7V3SONZLIN2VGWMK3RMOUOVRXHO";
 
